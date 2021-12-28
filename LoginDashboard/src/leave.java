@@ -228,8 +228,20 @@ public class leave extends javax.swing.JFrame {
         DefaultTableModel tblModel = (DefaultTableModel)leave_table.getModel();
         // delet row
         if(leave_table.getSelectedRowCount() == 1){
-            //if single row selected
-            tblModel.removeRow(leave_table.getSelectedRow());
+            try {
+                //if single row selected
+                int id = (int) tblModel.getValueAt(leave_table.getSelectedRow(),0);
+                PreparedStatement stm = con.prepareStatement("delete from employee where employee_id=?");
+                stm.setInt(1, id);
+                stm.executeUpdate();
+                JOptionPane.showMessageDialog(this,"Data Deleted Successfully!");
+                fillTable();
+                add_emp_id.setText("");
+                add_emp_name.setText("");
+                add_emp_number.setText("");
+            } catch (SQLException ex) {
+                Logger.getLogger(leave.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else{
             //if row empty
@@ -252,14 +264,19 @@ public class leave extends javax.swing.JFrame {
             //set to uptade value in row 
             try {
                 // if row selected
-                PreparedStatement stm = con.prepareStatement("update employee set employee_name=?, employee_num=?, leave_t=? where employee_id=?");
+                int id = (int) tblModel.getValueAt(leave_table.getSelectedRow(),0);
+                PreparedStatement stm = con.prepareStatement("update employee set employee_name=?, employee_num=?, leave_t=?, employee_id=? where employee_id=?");
                 stm.setString(1, add_emp_name.getText());
                 stm.setInt(2, (int) Double.parseDouble(add_emp_number.getText()));
                 stm.setInt(3, 0);
                 stm.setInt(4, (int) Double.parseDouble(add_emp_id.getText()));
+                stm.setInt(5, id);
                 stm.executeUpdate();
                 JOptionPane.showMessageDialog(this,"Data Updated Successfully!");
                 fillTable();
+                add_emp_id.setText("");
+                add_emp_name.setText("");
+                add_emp_number.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(company.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -301,8 +318,6 @@ public class leave extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
             }
-            fillTable();
-            JOptionPane.showMessageDialog(this,"Data Added Successfully!");
             add_emp_id.setText("");
             add_emp_name.setText("");
             add_emp_number.setText("");

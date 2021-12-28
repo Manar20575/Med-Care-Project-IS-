@@ -176,23 +176,22 @@ public class attendance extends javax.swing.JFrame {
                             .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(attendance_pnlLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(add_emp_number, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(attendance_pnlLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(updateData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(deletData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendance_pnlLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(1, 1, 1)
                         .addComponent(emp_name_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(emp_job_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE))
+                    .addGroup(attendance_pnlLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(add_emp_number, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deletData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -260,14 +259,19 @@ public class attendance extends javax.swing.JFrame {
             //set to uptade value in row 
             try {
                 // if row selected
-                PreparedStatement stm = con.prepareStatement("update employee set employee_name=?, employee_num=?, leave_t=? where employee_id=?");
+                int id = (int) tblModel.getValueAt(attend_table.getSelectedRow(),0);
+                PreparedStatement stm = con.prepareStatement("update employee set employee_name=?, employee_num=?, leave_t=?, employee_id=? where employee_id=?");
                 stm.setString(1, add_emp_name.getText());
                 stm.setInt(2, (int) Double.parseDouble(add_emp_number.getText()));
                 stm.setInt(3, 0);
                 stm.setInt(4, (int) Double.parseDouble(add_emp_id.getText()));
+                stm.setInt(5, id);
                 stm.executeUpdate();
                 JOptionPane.showMessageDialog(this,"Data Updated Successfully!");
                 fillTable();
+                add_emp_id.setText("");
+                add_emp_name.setText("");
+                add_emp_number.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(company.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -290,8 +294,21 @@ public class attendance extends javax.swing.JFrame {
         DefaultTableModel tblModel = (DefaultTableModel)attend_table.getModel();
         // delet row
         if(attend_table.getSelectedRowCount() == 1){
-            //if single row selected
-            tblModel.removeRow(attend_table.getSelectedRow());
+            try {
+                //if single row selected
+                int id = (int) tblModel.getValueAt(attend_table.getSelectedRow(),0);
+                PreparedStatement stm = con.prepareStatement("delete from employee where employee_id=?");
+                stm.setInt(1, id);
+                stm.executeUpdate();
+                JOptionPane.showMessageDialog(this,"Data Deleted Successfully!");
+                fillTable();
+                add_emp_id.setText("");
+                add_emp_name.setText("");
+                add_emp_number.setText("");
+            } catch (SQLException ex) {
+                Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
         else{
             //if row empty

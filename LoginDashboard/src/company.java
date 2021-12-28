@@ -513,25 +513,22 @@ public class company extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(91, 91, 91)
+                                .addGap(241, 241, 241)
+                                .addComponent(add_deal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(71, 71, 71)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(150, 150, 150)
-                                        .addComponent(add_deal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(71, 71, 71)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel12))
+                                        .addGap(23, 23, 23)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(companyphone_input, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(companyaddress_input, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(companyname_input, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12)
+                                            .addComponent(companyname_input, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jLabel11))))
                         .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -680,7 +677,7 @@ public class company extends javax.swing.JFrame {
     private void fillTable() {
         try {
             dtm.setRowCount(0);
-            PreparedStatement stm = con.prepareStatement("select manufactors.m_name, manufactors.m_number, manufactors.m_address,drugs.drug_name, drugs.drug_price, drugs.amount from manufactors, drugs where drugs.m_name = manufactors.m_name");
+            PreparedStatement stm = con.prepareStatement("select drugs.m_name, manufactors.m_number, manufactors.m_address,drugs.drug_name, drugs.drug_price, drugs.amount from manufactors, drugs where drugs.m_name = manufactors.m_name");
             ResultSet rs = stm.executeQuery();
             while(rs.next())
             {
@@ -705,21 +702,15 @@ public class company extends javax.swing.JFrame {
         if(company_table.getSelectedRowCount() == 1){
             //if single row selected
             try {
-                PreparedStatement stm = con.prepareStatement("delete from manufactors where ");
-                stm.setString(1, companyname_input.getText());
-                stm.setString(2, companyphone_input.getText());
-                stm.setString(3, companyaddress_input.getText());
+                int num = (int) tblModel.getValueAt(company_table.getSelectedRow(),0);
+                PreparedStatement stm = con.prepareStatement("delete manufactors, drugs from manufactors inner join drugs on drugs.m_name = manufactors.m_name where manufactors.m_number=?");
+                stm.setInt(1, num);
                 stm.executeUpdate();
-                PreparedStatement stm2 = con.prepareStatement("delete from drugs where ");
-                stm2.setString(1, med_name_input.getText());
-                stm2.setString(2, med_amount_input.getText());
-                stm2.executeUpdate();
-
-                JOptionPane.showMessageDialog(this,"Added Successfully!");
+                JOptionPane.showMessageDialog(this,"Data Deleted Successfully!");
+                fillTable();
             } catch (SQLException ex) {
                 Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this,"Data Added Successfully!");
             companyname_input.setText("");
             companyphone_input.setText("");
             companyaddress_input.setText("");
@@ -744,17 +735,18 @@ public class company extends javax.swing.JFrame {
         if(company_table.getSelectedRowCount() == 1){
             try {
                 // if row selected
+                String name = tblModel.getValueAt(company_table.getSelectedRow(),0).toString();
                 PreparedStatement stm = con.prepareStatement("update manufactors set m_number=? , m_address=?, m_name=? where m_name=?");
                 stm.setInt(1, (int) Double.parseDouble(companyphone_input.getText()));
                 stm.setString(2, companyaddress_input.getText());
                 stm.setString(3, companyname_input.getText());
-                stm.setString(4, companyname_input.getText());
+                stm.setString(4, name);
                 stm.executeUpdate();
                 PreparedStatement stm2 = con.prepareStatement("update drugs set drug_name=?,amount=?, drug_price=? where m_name=?");
                 stm2.setString(1, med_name_input.getText());
                 stm2.setInt(2, (int) Double.parseDouble(med_amount_input.getText()));
                 stm2.setInt(3, (int) Double.parseDouble(med_price_input.getText()));
-                stm2.setString(5, companyname_input.getText());
+                stm2.setString(4, name);
                 stm2.executeUpdate();
                 fillTable();
                 companyname_input.setText("");
