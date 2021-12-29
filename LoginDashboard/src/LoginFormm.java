@@ -20,17 +20,17 @@ public class LoginFormm extends javax.swing.JFrame {
      * Creates new form LoginFormm
      */
     String txt_username, txt_password;
-    Connection con = null;
+    Connection con;
     public LoginFormm() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         try {
-            con = DriverManager.getConnection("jdbc:/mysql://localhost:3306/med_care", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     /**
@@ -56,15 +56,15 @@ public class LoginFormm extends javax.swing.JFrame {
         username_lbl1.setForeground(new java.awt.Color(0, 204, 183));
         username_lbl1.setText("Username :");
         getContentPane().add(username_lbl1);
-        username_lbl1.setBounds(1120, 420, 124, 29);
+        username_lbl1.setBounds(940, 420, 124, 29);
 
         password_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         password_lbl.setForeground(new java.awt.Color(0, 204, 183));
         password_lbl.setText("Password :");
         getContentPane().add(password_lbl);
-        password_lbl.setBounds(1120, 540, 117, 29);
+        password_lbl.setBounds(940, 520, 117, 29);
         getContentPane().add(username_input);
-        username_input.setBounds(1350, 410, 260, 40);
+        username_input.setBounds(1110, 410, 260, 40);
 
         password_input.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +72,7 @@ public class LoginFormm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(password_input);
-        password_input.setBounds(1350, 540, 260, 40);
+        password_input.setBounds(1110, 510, 260, 40);
 
         login_btn.setBackground(new java.awt.Color(255, 255, 255));
         login_btn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -89,7 +89,7 @@ public class LoginFormm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(login_btn);
-        login_btn.setBounds(1420, 680, 110, 40);
+        login_btn.setBounds(1110, 670, 110, 40);
 
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/v870-tang-36.jpg"))); // NOI18N

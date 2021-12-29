@@ -34,7 +34,7 @@ public class leave extends javax.swing.JFrame {
         dtm.addColumn("Employee ID");
         dtm.addColumn("Employee Name");
         dtm.addColumn("Employee Number");
-        dtm.addColumn("Attendence Time");
+        dtm.addColumn("Leave Time");
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
         } catch (SQLException ex) {
