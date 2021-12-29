@@ -1,9 +1,9 @@
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import javax.swing.JPanel;
 import java.sql.*;
-import static java.time.LocalDateTime.now;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -20,32 +20,14 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class DashboardForm extends javax.swing.JFrame {
-
-    /**
-     * Creates new form DashboardForm
-     * 
-    private void onClick(JPanel panel){
-        panel.setBackground(new Color(0,204,183));
-    }
-    private void onLeaveClick(JPanel panel){
-        panel.setBackground(new Color(233,233,233));
-    }
-    private void onLeave(JPanel panel){
-        panel.setBackground(Color.WHITE);
-    }
-     */
-    Connection con;
     public DashboardForm() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                       
     }
+    DateTimeFormatter t =  DateTimeFormatter.ofPattern("yyyy-MM-dd,HH:mm:ss");
+           LocalDateTime now = LocalDateTime.now();  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,19 +40,19 @@ public class DashboardForm extends javax.swing.JFrame {
 
         main_pnl = new javax.swing.JPanel();
         med_name_lbl = new javax.swing.JLabel();
-        med_quantity_lbl = new javax.swing.JLabel();
         med_name_input = new javax.swing.JTextField();
+        med_quantity_lbl = new javax.swing.JLabel();
         med_quantity_input = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         bill_table = new javax.swing.JTable();
-        add_med_btn1 = new javax.swing.JButton();
-        delete_med_btn1 = new javax.swing.JButton();
-        delete_med_btn = new javax.swing.JButton();
+        add_med_btn = new javax.swing.JButton();
         update_med_btn = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
+        delete_med_btn = new javax.swing.JButton();
+        delete_med_btn1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        add_med_btn = new javax.swing.JButton();
+        add_med_btn1 = new javax.swing.JButton();
         dash_pnl = new javax.swing.JPanel();
         company_btn = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -80,14 +62,10 @@ public class DashboardForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         indicator3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        check_btn = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        indicator5 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         profit_btn = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         indicator4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         logo_pnl = new javax.swing.JPanel();
         img_logo = new javax.swing.JLabel();
         logo_lbl = new javax.swing.JLabel();
@@ -116,27 +94,22 @@ public class DashboardForm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(bill_table);
 
-        add_med_btn1.setText("Add");
-        add_med_btn1.addMouseListener(new java.awt.event.MouseAdapter() {
+        add_med_btn.setText("Print");
+        add_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                add_med_btn1MouseClicked(evt);
+                add_med_btnMouseClicked(evt);
             }
         });
-        add_med_btn1.addActionListener(new java.awt.event.ActionListener() {
+        add_med_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_med_btn1ActionPerformed(evt);
+                add_med_btnActionPerformed(evt);
             }
         });
 
-        delete_med_btn1.setText("Update");
-        delete_med_btn1.addMouseListener(new java.awt.event.MouseAdapter() {
+        update_med_btn.setText("Clear");
+        update_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                delete_med_btn1MouseClicked(evt);
-            }
-        });
-        delete_med_btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                delete_med_btn1ActionPerformed(evt);
+                update_med_btnMouseClicked(evt);
             }
         });
 
@@ -152,29 +125,34 @@ public class DashboardForm extends javax.swing.JFrame {
             }
         });
 
-        update_med_btn.setText("Clear");
-        update_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+        delete_med_btn1.setText("Update");
+        delete_med_btn1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                update_med_btnMouseClicked(evt);
+                delete_med_btn1MouseClicked(evt);
+            }
+        });
+        delete_med_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_med_btn1ActionPerformed(evt);
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel11.setText("Bill");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel6.setText("Bill");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        add_med_btn.setText("Print");
-        add_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+        add_med_btn1.setText("Add");
+        add_med_btn1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                add_med_btnMouseClicked(evt);
+                add_med_btn1MouseClicked(evt);
             }
         });
-        add_med_btn.addActionListener(new java.awt.event.ActionListener() {
+        add_med_btn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_med_btnActionPerformed(evt);
+                add_med_btn1ActionPerformed(evt);
             }
         });
 
@@ -185,65 +163,71 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGroup(main_pnlLayout.createSequentialGroup()
                 .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(122, 122, 122)
                         .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(med_name_lbl)
-                            .addComponent(med_quantity_lbl))
-                        .addGap(35, 35, 35)
+                            .addGroup(main_pnlLayout.createSequentialGroup()
+                                .addGap(108, 108, 108)
+                                .addComponent(med_name_lbl)
+                                .addGap(42, 42, 42))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_pnlLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(med_quantity_lbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56)
+                        .addGap(152, 152, 152)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(add_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(delete_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87)
-                        .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(507, 507, 507)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
+                        .addGap(250, 250, 250)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(412, 412, 412)
+                        .addGap(188, 188, 188)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(main_pnlLayout.createSequentialGroup()
+                                .addComponent(add_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(144, 144, 144)
+                                .addComponent(delete_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(138, 138, 138)
+                        .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(562, 562, 562)
                         .addComponent(add_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(563, Short.MAX_VALUE))
+                .addContainerGap(914, Short.MAX_VALUE))
         );
         main_pnlLayout.setVerticalGroup(
             main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_pnlLayout.createSequentialGroup()
-                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(38, 38, 38)
+                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(med_name_lbl)
-                            .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(med_quantity_lbl)
-                            .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(med_name_lbl))
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(main_pnlLayout.createSequentialGroup()
+                                .addGap(122, 122, 122)
+                                .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(main_pnlLayout.createSequentialGroup()
+                                .addGap(163, 163, 163)
+                                .addComponent(med_quantity_lbl))))
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(add_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(delete_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addComponent(jLabel11)
-                .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(add_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(delete_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(39, 39, 39)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(add_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         dash_pnl.setBackground(new java.awt.Color(233, 233, 233));
@@ -273,8 +257,6 @@ public class DashboardForm extends javax.swing.JFrame {
             indicator2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/company.png"))); // NOI18N
 
         javax.swing.GroupLayout company_btnLayout = new javax.swing.GroupLayout(company_btn);
         company_btn.setLayout(company_btnLayout);
@@ -327,8 +309,6 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/staff.png"))); // NOI18N
-
         javax.swing.GroupLayout personal_btnLayout = new javax.swing.GroupLayout(personal_btn);
         personal_btn.setLayout(personal_btnLayout);
         personal_btnLayout.setHorizontalGroup(
@@ -352,58 +332,6 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        check_btn.setBackground(new java.awt.Color(233, 233, 233));
-        check_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        check_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                check_btnMouseClicked(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel6.setText("check");
-
-        indicator5.setBackground(new java.awt.Color(2, 152, 137));
-        indicator5.setOpaque(false);
-
-        javax.swing.GroupLayout indicator5Layout = new javax.swing.GroupLayout(indicator5);
-        indicator5.setLayout(indicator5Layout);
-        indicator5Layout.setHorizontalGroup(
-            indicator5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
-        indicator5Layout.setVerticalGroup(
-            indicator5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search.png"))); // NOI18N
-
-        javax.swing.GroupLayout check_btnLayout = new javax.swing.GroupLayout(check_btn);
-        check_btn.setLayout(check_btnLayout);
-        check_btnLayout.setHorizontalGroup(
-            check_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, check_btnLayout.createSequentialGroup()
-                .addComponent(indicator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        check_btnLayout.setVerticalGroup(
-            check_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(indicator5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(check_btnLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, check_btnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
-
         profit_btn.setBackground(new java.awt.Color(233, 233, 233));
         profit_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         profit_btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -413,7 +341,7 @@ public class DashboardForm extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel7.setText("  Profit");
+        jLabel7.setText("Medicine");
 
         indicator4.setBackground(new java.awt.Color(2, 152, 137));
         indicator4.setOpaque(false);
@@ -426,10 +354,8 @@ public class DashboardForm extends javax.swing.JFrame {
         );
         indicator4Layout.setVerticalGroup(
             indicator4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 106, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/hand.png"))); // NOI18N
 
         javax.swing.GroupLayout profit_btnLayout = new javax.swing.GroupLayout(profit_btn);
         profit_btn.setLayout(profit_btnLayout);
@@ -438,7 +364,7 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGroup(profit_btnLayout.createSequentialGroup()
                 .addComponent(indicator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -447,18 +373,14 @@ public class DashboardForm extends javax.swing.JFrame {
             profit_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(indicator4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profit_btnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(profit_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profit_btnLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(8, 8, 8)))
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(profit_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
         logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
-
-        img_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/capsules.png"))); // NOI18N
 
         logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
         logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -485,7 +407,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        home_btn.setBackground(new java.awt.Color(233, 233, 233));
+        home_btn.setBackground(new java.awt.Color(0, 204, 183));
         home_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -502,10 +424,8 @@ public class DashboardForm extends javax.swing.JFrame {
         );
         indicator1Layout.setVerticalGroup(
             indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 106, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/medical-history.png"))); // NOI18N
 
         javax.swing.GroupLayout home_btnLayout = new javax.swing.GroupLayout(home_btn);
         home_btn.setLayout(home_btnLayout);
@@ -523,7 +443,7 @@ public class DashboardForm extends javax.swing.JFrame {
             home_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(indicator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, home_btnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(home_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -535,7 +455,6 @@ public class DashboardForm extends javax.swing.JFrame {
         dash_pnlLayout.setHorizontalGroup(
             dash_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(personal_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(check_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(profit_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(company_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -545,7 +464,7 @@ public class DashboardForm extends javax.swing.JFrame {
             dash_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dash_pnlLayout.createSequentialGroup()
                 .addComponent(logo_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(60, 60, 60)
                 .addComponent(home_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(company_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -553,9 +472,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addComponent(personal_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(profit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)
-                .addComponent(check_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 200, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -563,37 +480,20 @@ public class DashboardForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dash_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(main_pnl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_profit_btnMouseClicked
-
-    private void check_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_btnMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        new check().setVisible(true);
-    }//GEN-LAST:event_check_btnMouseClicked
-
-    private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        new personnel().setVisible(true);
-    }//GEN-LAST:event_personal_btnMouseClicked
 
     private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked
         // TODO add your handling code here:
@@ -601,21 +501,63 @@ public class DashboardForm extends javax.swing.JFrame {
         new company().setVisible(true);
     }//GEN-LAST:event_company_btnMouseClicked
 
-    private void add_med_btn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btn1MouseClicked
+    private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_add_med_btn1MouseClicked
+        this.dispose();
+        new personnel().setVisible(true);
+    }//GEN-LAST:event_personal_btnMouseClicked
 
-    private void add_med_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btn1ActionPerformed
+    private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_add_med_btn1ActionPerformed
+        this.dispose();
+        new profit().setVisible(true);
+    }//GEN-LAST:event_profit_btnMouseClicked
 
-    private void delete_med_btn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_med_btn1MouseClicked
+    private void add_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_delete_med_btn1MouseClicked
+        
+        if(med_name_input.getText().equals("") || med_quantity_input.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Plz, Add all data!");
+        }
+        else{
+            String DateBill = t.format(now); 
+            DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+            String data[] = { med_name_input.getText(),med_quantity_input.getText(),DateBill};
+            tblModel.addRow(data);
+            JOptionPane.showMessageDialog(this,"Data Added Successfully!");
+            med_name_input.setText("");
+            med_quantity_input.setText("");
+   
+        }
+    }//GEN-LAST:event_add_med_btnMouseClicked
 
-    private void delete_med_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_med_btn1ActionPerformed
+    private void add_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_delete_med_btn1ActionPerformed
+    }//GEN-LAST:event_add_med_btnActionPerformed
+
+    private void update_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_med_btnMouseClicked
+        // TODO add your handling code here:
+        
+        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+        if(bill_table.getSelectedRowCount() == 1){
+            // if row selected
+            String Name = med_name_input.getText();
+            String Qua = med_quantity_input.getText();
+            String DateBill = t.format(now);            //set to uptade value in row
+            tblModel.setValueAt(Name,bill_table.getSelectedRow(), 0);
+            tblModel.setValueAt(Qua,bill_table.getSelectedRow(), 1);
+            tblModel.setValueAt(DateBill,bill_table.getSelectedRow(), 2);
+        }
+        else{
+            if(bill_table.getRowCount()==0){
+                JOptionPane.showMessageDialog(this,"Table is Empty");
+            }
+            else{
+                //if row nt selected || multi roe selected
+                JOptionPane.showMessageDialog(this,"Plz, Select Single Row For Update");
+            }
+        }
+    }//GEN-LAST:event_update_med_btnMouseClicked
 
     private void delete_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_med_btnMouseClicked
         // TODO add your handling code here:
@@ -637,55 +579,25 @@ public class DashboardForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_delete_med_btnMouseClicked
 
+    private void delete_med_btn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_med_btn1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete_med_btn1MouseClicked
+
+    private void delete_med_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_med_btn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete_med_btn1ActionPerformed
+
     private void delete_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_med_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_delete_med_btnActionPerformed
 
-    private void update_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_med_btnMouseClicked
+    private void add_med_btn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btn1MouseClicked
         // TODO add your handling code here:
+    }//GEN-LAST:event_add_med_btn1MouseClicked
 
-        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
-        if(bill_table.getSelectedRowCount() == 1){
-            // if row selected
-            String Name = med_name_input.getText();
-            String Qua = med_quantity_input.getText();
-//            String DateBill = t.format(now);            //set to uptade value in row
-            tblModel.setValueAt(Name,bill_table.getSelectedRow(), 0);
-            tblModel.setValueAt(Qua,bill_table.getSelectedRow(), 1);
-//            tblModel.setValueAt(DateBill,bill_table.getSelectedRow(), 2);
-        }
-        else{
-            if(bill_table.getRowCount()==0){
-                JOptionPane.showMessageDialog(this,"Table is Empty");
-            }
-            else{
-                //if row nt selected || multi roe selected
-                JOptionPane.showMessageDialog(this,"Plz, Select Single Row For Update");
-            }
-        }
-    }//GEN-LAST:event_update_med_btnMouseClicked
-
-    private void add_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btnMouseClicked
+    private void add_med_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btn1ActionPerformed
         // TODO add your handling code here:
-
-        if(med_name_input.getText().equals("") || med_quantity_input.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Plz, Add all data!");
-        }
-        else{
-//            String DateBill = t.format(now);
-            DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
-            String data[] = { med_name_input.getText(),med_quantity_input.getText()};
-            tblModel.addRow(data);
-            JOptionPane.showMessageDialog(this,"Data Added Successfully!");
-            med_name_input.setText("");
-            med_quantity_input.setText("");
-
-        }
-    }//GEN-LAST:event_add_med_btnMouseClicked
-
-    private void add_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_add_med_btnActionPerformed
+    }//GEN-LAST:event_add_med_btn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -726,7 +638,6 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JButton add_med_btn;
     private javax.swing.JButton add_med_btn1;
     private javax.swing.JTable bill_table;
-    private javax.swing.JPanel check_btn;
     private javax.swing.JPanel company_btn;
     private javax.swing.JPanel dash_pnl;
     private javax.swing.JButton delete_med_btn;
@@ -737,9 +648,7 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JPanel indicator2;
     private javax.swing.JPanel indicator3;
     private javax.swing.JPanel indicator4;
-    private javax.swing.JPanel indicator5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -748,7 +657,6 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
