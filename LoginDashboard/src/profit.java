@@ -519,21 +519,17 @@ public class profit extends javax.swing.JFrame {
         med_price_input.setText(tblPrice);
         med_quantity_input.setText(tblQuantity);
         med_camp_input.setSelectedItem(tblacaomp);
-        med_produ_input.setDate(date);
-        med_expire_input.setDate(date1);
     }//GEN-LAST:event_med_tableMouseClicked
 
     private void add_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btnMouseClicked
         // TODO add your handling code here:
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        String datepro = date.format(med_produ_input.getDate());
-        String datepex = date.format(med_expire_input.getDate());
         DefaultTableModel tblModel = (DefaultTableModel)med_table.getModel();
-        if(med_name_input.getText().equals("") || med_price_input.getText().equals("") || med_quantity_input.getText().equals("") || datepro.equals("") || datepex.equals("") || med_camp_input.getSelectedItem().equals("")){
+        if(med_name_input.getText().equals("") || med_price_input.getText().equals("") || med_quantity_input.getText().equals("") || med_camp_input.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(this,"Plz, Add all data!");
         }
         else{
-            String data[] = { med_name_input.getText(), med_price_input.getText(),med_quantity_input.getText(),datepro, datepex ,  med_camp_input.getSelectedItem().toString()};
+            String data[] = { med_name_input.getText(), med_price_input.getText(),med_quantity_input.getText(), med_camp_input.getSelectedItem().toString()};
             tblModel.addRow(data);
             JOptionPane.showMessageDialog(this,"Data Added Successfully!");
             med_name_input.setText("");
@@ -551,8 +547,6 @@ public class profit extends javax.swing.JFrame {
     private void update_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_med_btnMouseClicked
         // TODO add your handling code here:
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        String datepro = date.format(med_produ_input.getDate());
-        String datepex = date.format(med_expire_input.getDate());
         DefaultTableModel tblModel = (DefaultTableModel)med_table.getModel();
         if(med_table.getSelectedRowCount() == 1){
             // if row selected
@@ -564,9 +558,7 @@ public class profit extends javax.swing.JFrame {
             tblModel.setValueAt(Price,med_table.getSelectedRow(), 1);
             tblModel.setValueAt(Name,med_table.getSelectedRow(), 0);
             tblModel.setValueAt(Qua,med_table.getSelectedRow(), 2);
-            tblModel.setValueAt(datepro,med_table.getSelectedRow(), 3);
-            tblModel.setValueAt(datepex,med_table.getSelectedRow(), 4);
-            tblModel.setValueAt(Com,med_table.getSelectedRow(), 5);
+            tblModel.setValueAt(Com,med_table.getSelectedRow(), 3);
             JOptionPane.showMessageDialog(this,"Data Update Successfully...!");
         }
         else{
