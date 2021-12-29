@@ -675,7 +675,7 @@ public class company extends javax.swing.JFrame {
     private void fillTable() {
         try {
             dtm.setRowCount(0);
-            PreparedStatement stm = con.prepareStatement("select manufactors.m_name, manufactors.m_number, manufactors.m_address,drugs.drug_name, drugs.drug_price, drugs.amount from manufactors, drugs where drugs.m_name = manufactors.m_name");
+            PreparedStatement stm = con.prepareStatement("select drugs.m_name, manufactors.m_number, manufactors.m_address,drugs.drug_name, drugs.drug_price, drugs.amount from manufactors, drugs where drugs.m_name = manufactors.m_name");
             ResultSet rs = stm.executeQuery();
             while(rs.next())
             {
@@ -700,11 +700,11 @@ public class company extends javax.swing.JFrame {
         if(company_table.getSelectedRowCount() == 1){
             //if single row selected
             try {
-                String name = tblModel.getValueAt(company_table.getSelectedRow(),0).toString();
+                String address = tblModel.getValueAt(company_table.getSelectedRow(),2).toString();
                 int num = (int) tblModel.getValueAt(company_table.getSelectedRow(),1);
-                PreparedStatement stm = con.prepareStatement("delete manufactors, drugs from manufactors inner join drugs on drugs.m_name = manufactors.m_name where manufactors.m_number=? and manufactors.m_name=?");
+                PreparedStatement stm = con.prepareStatement("delete manufactors, drugs from manufactors inner join drugs on drugs.m_name = manufactors.m_name where manufactors.m_number=? and manufactors.m_address=?");
                 stm.setInt(1, num);
-                stm.setString(2, name);
+                stm.setString(2, address);
                 stm.executeUpdate();
                 JOptionPane.showMessageDialog(this,"Data Deleted Successfully!");
                 fillTable();
@@ -735,16 +735,14 @@ public class company extends javax.swing.JFrame {
         if(company_table.getSelectedRowCount() == 1){
             try {
                 // if row selected
-                String name = tblModel.getValueAt(company_table.getSelectedRow(),0).toString();
+                String name = tblModel.getValueAt(company_table.getSelectedRow(),3).toString();
                 int num = (int) tblModel.getValueAt(company_table.getSelectedRow(),1);
-                PreparedStatement stm = con.prepareStatement("update manufactors set m_number=? , m_address=?, m_name=? where m_name=? and m_number=?");
+                PreparedStatement stm = con.prepareStatement("update manufactors set m_number=? , m_address=? where m_number=?");
                 stm.setInt(1, (int) Double.parseDouble(companyphone_input.getText()));
                 stm.setString(2, companyaddress_input.getText());
-                stm.setString(3, companyname_input.getText());
-                stm.setString(4, name);
-                stm.setInt(5, num);
+                stm.setInt(3, num);
                 stm.executeUpdate();
-                PreparedStatement stm2 = con.prepareStatement("update drugs set drug_name=?,amount=?, drug_price=? where m_name=?");
+                PreparedStatement stm2 = con.prepareStatement("update drugs set drug_name=?, amount=?, drug_price=? where drug_name=?");
                 stm2.setString(1, med_name_input.getText());
                 stm2.setInt(2, (int) Double.parseDouble(med_amount_input.getText()));
                 stm2.setInt(3, (int) Double.parseDouble(med_price_input.getText()));

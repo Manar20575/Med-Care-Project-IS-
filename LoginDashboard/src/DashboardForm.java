@@ -3,10 +3,12 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.sql.*;
+import static java.time.LocalDateTime.now;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -32,12 +34,13 @@ public class DashboardForm extends javax.swing.JFrame {
         panel.setBackground(Color.WHITE);
     }
      */
+    Connection con;
     public DashboardForm() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,6 +57,20 @@ public class DashboardForm extends javax.swing.JFrame {
     private void initComponents() {
 
         main_pnl = new javax.swing.JPanel();
+        med_name_lbl = new javax.swing.JLabel();
+        med_quantity_lbl = new javax.swing.JLabel();
+        med_name_input = new javax.swing.JTextField();
+        med_quantity_input = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bill_table = new javax.swing.JTable();
+        add_med_btn1 = new javax.swing.JButton();
+        delete_med_btn1 = new javax.swing.JButton();
+        delete_med_btn = new javax.swing.JButton();
+        update_med_btn = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        add_med_btn = new javax.swing.JButton();
         dash_pnl = new javax.swing.JPanel();
         company_btn = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -83,15 +100,150 @@ public class DashboardForm extends javax.swing.JFrame {
 
         main_pnl.setBackground(new java.awt.Color(255, 255, 255));
 
+        med_name_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        med_name_lbl.setText("Name : ");
+
+        med_quantity_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        med_quantity_lbl.setText("Quantity : ");
+
+        bill_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Qua", "Date"
+            }
+        ));
+        jScrollPane1.setViewportView(bill_table);
+
+        add_med_btn1.setText("Add");
+        add_med_btn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                add_med_btn1MouseClicked(evt);
+            }
+        });
+        add_med_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_med_btn1ActionPerformed(evt);
+            }
+        });
+
+        delete_med_btn1.setText("Update");
+        delete_med_btn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delete_med_btn1MouseClicked(evt);
+            }
+        });
+        delete_med_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_med_btn1ActionPerformed(evt);
+            }
+        });
+
+        delete_med_btn.setText("Delete");
+        delete_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delete_med_btnMouseClicked(evt);
+            }
+        });
+        delete_med_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_med_btnActionPerformed(evt);
+            }
+        });
+
+        update_med_btn.setText("Clear");
+        update_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                update_med_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel11.setText("Bill");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        add_med_btn.setText("Print");
+        add_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                add_med_btnMouseClicked(evt);
+            }
+        });
+        add_med_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_med_btnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout main_pnlLayout = new javax.swing.GroupLayout(main_pnl);
         main_pnl.setLayout(main_pnlLayout);
         main_pnlLayout.setHorizontalGroup(
             main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1948, Short.MAX_VALUE)
+            .addGroup(main_pnlLayout.createSequentialGroup()
+                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(med_name_lbl)
+                            .addComponent(med_quantity_lbl))
+                        .addGap(35, 35, 35)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(add_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(delete_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87)
+                        .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(507, 507, 507)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(412, 412, 412)
+                        .addComponent(add_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(563, Short.MAX_VALUE))
         );
         main_pnlLayout.setVerticalGroup(
             main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1060, Short.MAX_VALUE)
+            .addGroup(main_pnlLayout.createSequentialGroup()
+                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(med_name_lbl)
+                            .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(med_quantity_lbl)
+                            .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete_med_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(add_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         dash_pnl.setBackground(new java.awt.Color(233, 233, 233));
@@ -427,17 +579,9 @@ public class DashboardForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked
+    private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here:
-        this.dispose();
-        new company().setVisible(true);
-    }//GEN-LAST:event_company_btnMouseClicked
-
-    private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        new personnel().setVisible(true);
-    }//GEN-LAST:event_personal_btnMouseClicked
+    }//GEN-LAST:event_profit_btnMouseClicked
 
     private void check_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_btnMouseClicked
         // TODO add your handling code here:
@@ -445,9 +589,103 @@ public class DashboardForm extends javax.swing.JFrame {
         new check().setVisible(true);
     }//GEN-LAST:event_check_btnMouseClicked
 
-    private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
+    private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_profit_btnMouseClicked
+        this.dispose();
+        new personnel().setVisible(true);
+    }//GEN-LAST:event_personal_btnMouseClicked
+
+    private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new company().setVisible(true);
+    }//GEN-LAST:event_company_btnMouseClicked
+
+    private void add_med_btn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btn1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_add_med_btn1MouseClicked
+
+    private void add_med_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_add_med_btn1ActionPerformed
+
+    private void delete_med_btn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_med_btn1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete_med_btn1MouseClicked
+
+    private void delete_med_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_med_btn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete_med_btn1ActionPerformed
+
+    private void delete_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_med_btnMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+        // delet row
+        if(bill_table.getSelectedRowCount() == 1){
+            //if single row selected
+            tblModel.removeRow(bill_table.getSelectedRow());
+        }
+        else{
+            //if row empty
+            if(bill_table.getRowCount()==0){
+                JOptionPane.showMessageDialog(this,"Table is Empty");
+            }
+            else{
+                //if row nt selected || multi roe selected
+                JOptionPane.showMessageDialog(this,"Plz, Select Single Row For Update");
+            }
+        }
+    }//GEN-LAST:event_delete_med_btnMouseClicked
+
+    private void delete_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_med_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete_med_btnActionPerformed
+
+    private void update_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_med_btnMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+        if(bill_table.getSelectedRowCount() == 1){
+            // if row selected
+            String Name = med_name_input.getText();
+            String Qua = med_quantity_input.getText();
+//            String DateBill = t.format(now);            //set to uptade value in row
+            tblModel.setValueAt(Name,bill_table.getSelectedRow(), 0);
+            tblModel.setValueAt(Qua,bill_table.getSelectedRow(), 1);
+//            tblModel.setValueAt(DateBill,bill_table.getSelectedRow(), 2);
+        }
+        else{
+            if(bill_table.getRowCount()==0){
+                JOptionPane.showMessageDialog(this,"Table is Empty");
+            }
+            else{
+                //if row nt selected || multi roe selected
+                JOptionPane.showMessageDialog(this,"Plz, Select Single Row For Update");
+            }
+        }
+    }//GEN-LAST:event_update_med_btnMouseClicked
+
+    private void add_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btnMouseClicked
+        // TODO add your handling code here:
+
+        if(med_name_input.getText().equals("") || med_quantity_input.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Plz, Add all data!");
+        }
+        else{
+//            String DateBill = t.format(now);
+            DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+            String data[] = { med_name_input.getText(),med_quantity_input.getText()};
+            tblModel.addRow(data);
+            JOptionPane.showMessageDialog(this,"Data Added Successfully!");
+            med_name_input.setText("");
+            med_quantity_input.setText("");
+
+        }
+    }//GEN-LAST:event_add_med_btnMouseClicked
+
+    private void add_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_add_med_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -485,9 +723,14 @@ public class DashboardForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add_med_btn;
+    private javax.swing.JButton add_med_btn1;
+    private javax.swing.JTable bill_table;
     private javax.swing.JPanel check_btn;
     private javax.swing.JPanel company_btn;
     private javax.swing.JPanel dash_pnl;
+    private javax.swing.JButton delete_med_btn;
+    private javax.swing.JButton delete_med_btn1;
     private javax.swing.JPanel home_btn;
     private javax.swing.JLabel img_logo;
     private javax.swing.JPanel indicator1;
@@ -497,6 +740,7 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JPanel indicator5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -505,10 +749,18 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel logo_lbl;
     private javax.swing.JPanel logo_pnl;
     private javax.swing.JPanel main_pnl;
+    private javax.swing.JTextField med_name_input;
+    private javax.swing.JLabel med_name_lbl;
+    private javax.swing.JTextField med_quantity_input;
+    private javax.swing.JLabel med_quantity_lbl;
     private javax.swing.JPanel personal_btn;
     private javax.swing.JPanel profit_btn;
+    private javax.swing.JButton update_med_btn;
     // End of variables declaration//GEN-END:variables
 }
