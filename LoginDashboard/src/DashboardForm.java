@@ -91,6 +91,8 @@ public class DashboardForm extends javax.swing.JFrame {
         med_name_lbl = new javax.swing.JLabel();
         med_name_input = new javax.swing.JTextField();
         search_btn = new javax.swing.JButton();
+        med_quan_lbl = new javax.swing.JLabel();
+        med_quantity_input = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -418,6 +420,9 @@ public class DashboardForm extends javax.swing.JFrame {
             }
         });
 
+        med_quan_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        med_quan_lbl.setText("Quantity :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -433,8 +438,12 @@ public class DashboardForm extends javax.swing.JFrame {
                         .addComponent(med_name_lbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162)
-                        .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(med_quan_lbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,7 +451,9 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(med_name_lbl)
                     .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(med_quan_lbl)
+                    .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -496,12 +507,59 @@ public class DashboardForm extends javax.swing.JFrame {
     }//GEN-LAST:event_search_btnMouseClicked
 
     private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_btnActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String drug_name = med_name_input.getText();
+            dtm.setRowCount(0);
+            PreparedStatement stm = con.prepareStatement("select drug_name, drug_price,amount from drugs where drug_name=?");
+            stm.setString(1, drug_name);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                dtm.addRow(new Object[]{rs.getString(1), rs.getInt(2), rs.getInt(3)});  
+            }
+            bill_table.setModel(dtm);
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_search_btnActionPerformed
 
     private void buy_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buy_med_btnActionPerformed
         // TODO add your handling code here:
-        dtm.setRowCount(0);
+        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+        if(bill_table.getSelectedRowCount() == 1){
+            try {
+                String name = tblModel.getValueAt(bill_table.getSelectedRow(),0).toString();
+                int amount = (int) tblModel.getValueAt(bill_table.getSelectedRow(),2);
+                int ordered = (int) Double.parseDouble(med_quantity_input.getText());
+                int price = (int) tblModel.getValueAt(bill_table.getSelectedRow(),1);
+                int sold; 
+                PreparedStatement stm1 = con.prepareStatement("select sold from finance");
+                ResultSet rs = stm1.executeQuery();
+                sold = rs.getInt(1);
+                PreparedStatement stm = con.prepareStatement("update drugs set amount=? where drug_name=?");
+                stm.setInt(1, amount - ordered);
+                stm.setString(2, name);
+                stm.executeUpdate();
+                PreparedStatement stm2 = con.prepareStatement("update finance set sold=? where drug_name=?");
+                stm.setInt(1, sold + ordered * price);
+                stm.setString(2, name);
+                stm.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Bought successfully!" + (ordered * price));
+            } catch (SQLException ex) {
+                Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            if(bill_table.getRowCount()==0){
+                JOptionPane.showMessageDialog(this,"Table is Empty");
+            }
+            else{
+                //if row nt selected || multi roe selected
+                JOptionPane.showMessageDialog(this,"Please, Select Single Row For Update");
+            }
+        }
     }//GEN-LAST:event_buy_med_btnActionPerformed
 
     /**
@@ -566,6 +624,8 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JPanel main_pnl;
     private javax.swing.JTextField med_name_input;
     private javax.swing.JLabel med_name_lbl;
+    private javax.swing.JLabel med_quan_lbl;
+    private javax.swing.JTextField med_quantity_input;
     private javax.swing.JPanel personal_btn;
     private javax.swing.JPanel profit_btn;
     private javax.swing.JButton search_btn;
