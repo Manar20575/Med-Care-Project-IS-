@@ -455,8 +455,6 @@ public class personnel extends javax.swing.JFrame {
 
     private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here:
-     this.dispose();
-     new profit().setVisible(true);
     }//GEN-LAST:event_profit_btnMouseClicked
 
     private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked

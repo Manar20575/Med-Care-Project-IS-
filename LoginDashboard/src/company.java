@@ -620,8 +620,6 @@ public class company extends javax.swing.JFrame {
 
     private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here
-        this.dispose();
-     new profit().setVisible(true);
     }//GEN-LAST:event_profit_btnMouseClicked
 
     private void companyname_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyname_inputActionPerformed
