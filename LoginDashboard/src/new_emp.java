@@ -1,6 +1,4 @@
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -244,6 +242,7 @@ public class new_emp extends javax.swing.JFrame {
                 add_emp_id.setText("");
                 add_emp_name.setText("");
                 add_emp_number.setText("");
+                add_emp_address.setText(""); 
             } catch (SQLException ex) {
                 Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -283,6 +282,7 @@ public class new_emp extends javax.swing.JFrame {
                 add_emp_id.setText("");
                 add_emp_name.setText("");
                 add_emp_number.setText("");
+                add_emp_address.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(company.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -316,6 +316,7 @@ public class new_emp extends javax.swing.JFrame {
                 add_emp_id.setText("");
                 add_emp_name.setText("");
                 add_emp_number.setText("");
+                add_emp_address.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }

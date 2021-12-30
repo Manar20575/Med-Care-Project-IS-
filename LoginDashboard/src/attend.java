@@ -31,14 +31,29 @@ public class attend extends javax.swing.JFrame {
         dtm.addColumn("Employee Name");
         dtm.addColumn("Days attended");
         dtm.addColumn("Attendence Time");
+        dtm.addColumn("Leave Time");
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        fillTable();
     }
-
+    private void fillTable() {
+    try {
+        dtm.setRowCount(0);
+        PreparedStatement stm = con.prepareStatement("select employee_id, employee_name, workDays, attendence, leave_t from employee");
+        ResultSet rs = stm.executeQuery();
+        while(rs.next())
+        {
+            dtm.addRow(new Object[]{rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5)});  
+        }
+        attend_tbl.setModel(dtm);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, ex);
+    }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,13 +90,14 @@ public class attend extends javax.swing.JFrame {
         attend_btn = new javax.swing.JRadioButton();
         leave_btn = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        attend_tbl = new javax.swing.JTable();
         emp_id_lbl = new javax.swing.JLabel();
         add_emp_id = new javax.swing.JTextField();
         emp_name_lbl = new javax.swing.JLabel();
         add_emp_name = new javax.swing.JTextField();
         new_emp_btn = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
+        add_deal2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -373,7 +389,7 @@ public class attend extends javax.swing.JFrame {
         buttonGroup1.add(leave_btn);
         leave_btn.setText("Leave");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        attend_tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -384,7 +400,12 @@ public class attend extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        attend_tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                attend_tblMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(attend_tbl);
 
         emp_id_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         emp_id_lbl.setText("Id : ");
@@ -422,9 +443,17 @@ public class attend extends javax.swing.JFrame {
         new_emp_btnLayout.setVerticalGroup(
             new_emp_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, new_emp_btnLayout.createSequentialGroup()
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        add_deal2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        add_deal2.setText("Submit");
+        add_deal2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_deal2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -433,30 +462,35 @@ public class attend extends javax.swing.JFrame {
             .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(dash_pnl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(new_emp_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(250, 250, 250)
+                                .addComponent(new_emp_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(208, 208, 208)
+                                .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(leave_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(148, 148, 148)
+                                .addComponent(add_deal2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(281, 281, 281)
-                                .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(leave_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
+                                .addGap(117, 117, 117)
                                 .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
+                                .addGap(48, 48, 48)
                                 .addComponent(emp_name_lbl)
-                                .addGap(26, 26, 26)
+                                .addGap(31, 31, 31)
                                 .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 33, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 36, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,26 +500,22 @@ public class attend extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(40, 40, 40)
-                                        .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(17, 17, 17)))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(leave_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
+                                .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(emp_name_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(9, 9, 9)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(leave_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(add_deal2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(new_emp_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -543,9 +573,45 @@ public class attend extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_attend_btnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void add_deal2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_deal2ActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel)attend_tbl.getModel();
+        if(add_emp_id.getText().equals("") || add_emp_name.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Please, Add all data!");
+        }
+        else{
+            try {
+                if(attend_btn.isSelected())
+                {
+                    PreparedStatement stm = con.prepareStatement("update employee set attendence= default, workDays=? where employee_name=? and employee_id=?");
+                    stm.setInt(1, ((int) tblModel.getValueAt(attend_tbl.getSelectedRow(),2) + 1));
+                    stm.setString(2,add_emp_name.getText());
+                    stm.setInt(3, (int) Double.parseDouble(add_emp_id.getText()));
+                    stm.executeUpdate();
+                }
+                else if (leave_btn.isSelected())
+                {
+                    PreparedStatement stm = con.prepareStatement("update employee set leave_t= default where employee_name=? and employee_id=?");
+                    stm.setString(1,add_emp_name.getText());
+                    stm.setInt(2, (int) Double.parseDouble(add_emp_id.getText()));
+                    stm.executeUpdate();
+                }
+                fillTable();
+                add_emp_id.setText("");
+                add_emp_name.setText("");
+            } catch (SQLException ex) {
+                Logger.getLogger(attend.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+    }//GEN-LAST:event_add_deal2ActionPerformed
+
+    private void attend_tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attend_tblMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel)attend_tbl.getModel();
+        add_emp_id.setText(tblModel.getValueAt(attend_tbl.getSelectedRow(),0).toString());
+        add_emp_name.setText(tblModel.getValueAt(attend_tbl.getSelectedRow(),1).toString());
+    }//GEN-LAST:event_attend_tblMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -579,9 +645,13 @@ public class attend extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add_deal;
+    private javax.swing.JButton add_deal1;
+    private javax.swing.JButton add_deal2;
     private javax.swing.JTextField add_emp_id;
     private javax.swing.JTextField add_emp_name;
     private javax.swing.JRadioButton attend_btn;
+    private javax.swing.JTable attend_tbl;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel check_btn;
     private javax.swing.JPanel company_btn2;
@@ -606,7 +676,6 @@ public class attend extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton leave_btn;
     private javax.swing.JLabel logo_lbl;
     private javax.swing.JPanel logo_pnl;

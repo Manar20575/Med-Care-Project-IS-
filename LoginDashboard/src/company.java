@@ -1,7 +1,5 @@
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -583,9 +581,7 @@ public class company extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Please, Add all data!");
         }
         else{
-            String data[] = { companyname_input.getText(),companyphone_input.getText(), companyaddress_input.getText(),med_name_input.getText(),med_amount_input.getText()};
             DefaultTableModel tblModel = (DefaultTableModel)company_table.getModel();
-            tblModel.addRow(data);
             try {
                 PreparedStatement check = con.prepareStatement("select m_name from manufactors where m_name=?");
                 check.setString(1, companyname_input.getText());
