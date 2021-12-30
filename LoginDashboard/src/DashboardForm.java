@@ -1,9 +1,5 @@
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -478,28 +474,11 @@ public class DashboardForm extends javax.swing.JFrame {
     private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here:
         this.dispose();
-        new profit().setVisible(true);
+        new History().setVisible(true);
     }//GEN-LAST:event_profit_btnMouseClicked
 
     private void buy_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buy_med_btnMouseClicked
         // TODO add your handling code here:
-        
-        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
-        if(bill_table.getSelectedRowCount() == 1){
-            // if row selected
-            String Name = med_name_input.getText();
-            //set to uptade value in row
-            tblModel.setValueAt(Name,bill_table.getSelectedRow(), 0);
-        }
-        else{
-            if(bill_table.getRowCount()==0){
-                JOptionPane.showMessageDialog(this,"Table is Empty");
-            }
-            else{
-                //if row nt selected || multi roe selected
-                JOptionPane.showMessageDialog(this,"Please, Select Single Row For Update");
-            }
-        }
     }//GEN-LAST:event_buy_med_btnMouseClicked
 
     private void search_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search_btnMouseClicked
@@ -534,19 +513,20 @@ public class DashboardForm extends javax.swing.JFrame {
                 int amount = (int) tblModel.getValueAt(bill_table.getSelectedRow(),2);
                 int ordered = (int) Double.parseDouble(med_quantity_input.getText());
                 int price = (int) tblModel.getValueAt(bill_table.getSelectedRow(),1);
-                int sold; 
-                PreparedStatement stm1 = con.prepareStatement("select sold from finance");
-                ResultSet rs = stm1.executeQuery();
-                sold = rs.getInt(1);
                 PreparedStatement stm = con.prepareStatement("update drugs set amount=? where drug_name=?");
                 stm.setInt(1, amount - ordered);
                 stm.setString(2, name);
                 stm.executeUpdate();
-                PreparedStatement stm2 = con.prepareStatement("update finance set sold=? where drug_name=?");
-                stm.setInt(1, sold + ordered * price);
-                stm.setString(2, name);
-                stm.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Bought successfully!" + (ordered * price));
+                PreparedStatement stm2 = con.prepareStatement("insert into sold (drug_name, amount, drug_price) values (?,?,?)");
+                stm2.setString(1, name);                
+                stm2.setInt(2, ordered);
+                stm2.setInt(3,price);
+                stm2.executeUpdate();
+                PreparedStatement stm1 = con.prepareStatement("delete from drugs where amount=?");
+                stm1.setInt(1, 0);
+                stm1.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Bought successfully!\nYou should get "+ (ordered*price));
+                fillTable();
             } catch (SQLException ex) {
                 Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -557,7 +537,7 @@ public class DashboardForm extends javax.swing.JFrame {
             }
             else{
                 //if row nt selected || multi roe selected
-                JOptionPane.showMessageDialog(this,"Please, Select Single Row For Update");
+                JOptionPane.showMessageDialog(this,"Please, Select Single Row to Buy");
             }
         }
     }//GEN-LAST:event_buy_med_btnActionPerformed

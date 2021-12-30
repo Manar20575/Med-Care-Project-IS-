@@ -1,6 +1,5 @@
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -8,27 +7,53 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
 /**
  *
- * @author User
+ * @author Menna
  */
-public class profit extends javax.swing.JFrame {
+public class History extends javax.swing.JFrame {
 
     /**
-     * Creates new form profit
+     * Creates new form History
      */
-    public profit() {
+    DefaultTableModel dtm;
+    Connection con;
+    public History() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        dtm = new DefaultTableModel();
+        dtm.addColumn("Drug Name");
+        dtm.addColumn("Drug Price");
+        dtm.addColumn("Amount");
+        dtm.addColumn("Total Price");
+        dtm.addColumn("Date");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        fillTable();
     }
-    java.util.Date FDate, EDate;
-
+    private void fillTable() {
+        try {
+            dtm.setRowCount(0);
+            PreparedStatement stm = con.prepareStatement("select drug_name, drug_price, amount, sell_date from sold");
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                dtm.addRow(new Object[]{rs.getString(1), rs.getInt(2), rs.getInt(3), (rs.getInt(2) * rs.getInt(3)), rs.getString(4)});  
+            }
+            history_tbl.setModel(dtm);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,9 +64,6 @@ public class profit extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        logo_pnl = new javax.swing.JPanel();
-        img_logo = new javax.swing.JLabel();
-        logo_lbl = new javax.swing.JLabel();
         dash_pnl = new javax.swing.JPanel();
         company_btn = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -59,50 +81,14 @@ public class profit extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         indicator1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        med_name_input = new javax.swing.JTextField();
-        med_name_lbl = new javax.swing.JLabel();
-        med_price_lbl = new javax.swing.JLabel();
-        med_price_input = new javax.swing.JTextField();
-        med_quantity_lbl = new javax.swing.JLabel();
-        med_quantity_input = new javax.swing.JTextField();
-        med_camp_lbl = new javax.swing.JLabel();
-        med_expire_lbl = new javax.swing.JLabel();
-        med_produ_lbl = new javax.swing.JLabel();
-        med_camp_input = new javax.swing.JComboBox<>();
+        logo_pnl = new javax.swing.JPanel();
+        img_logo = new javax.swing.JLabel();
+        logo_lbl = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        med_table = new javax.swing.JTable();
-        add_med_btn = new javax.swing.JButton();
-        update_med_btn = new javax.swing.JButton();
-        delete_med_btn = new javax.swing.JButton();
+        history_tbl = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
-
-        logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
-        logo_lbl.setText("Med Care");
-
-        javax.swing.GroupLayout logo_pnlLayout = new javax.swing.GroupLayout(logo_pnl);
-        logo_pnl.setLayout(logo_pnlLayout);
-        logo_pnlLayout.setHorizontalGroup(
-            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logo_pnlLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(img_logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logo_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(780, 780, 780))
-        );
-        logo_pnlLayout.setVerticalGroup(
-            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logo_pnlLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(img_logo)
-                    .addComponent(logo_lbl))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
 
         dash_pnl.setBackground(new java.awt.Color(233, 233, 233));
 
@@ -134,10 +120,10 @@ public class profit extends javax.swing.JFrame {
             .addGroup(company_btnLayout.createSequentialGroup()
                 .addComponent(indicator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(364, Short.MAX_VALUE))
         );
         company_btnLayout.setVerticalGroup(
             company_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +134,9 @@ public class profit extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(company_btnLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addContainerGap()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         personal_btn.setBackground(new java.awt.Color(233, 233, 233));
@@ -186,7 +172,7 @@ public class profit extends javax.swing.JFrame {
                 .addComponent(indicator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -210,7 +196,7 @@ public class profit extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel7.setText("Medicine");
+        jLabel7.setText("History");
 
         indicator4.setBackground(new java.awt.Color(2, 152, 137));
         indicator4.setOpaque(false);
@@ -319,75 +305,51 @@ public class profit extends javax.swing.JFrame {
                 .addComponent(personal_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(profit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        med_name_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_name_lbl.setText("Name : ");
+        logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
 
-        med_price_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_price_lbl.setText("Price : ");
+        logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
+        logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        logo_lbl.setText("Med Care");
 
-        med_price_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                med_price_inputActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout logo_pnlLayout = new javax.swing.GroupLayout(logo_pnl);
+        logo_pnl.setLayout(logo_pnlLayout);
+        logo_pnlLayout.setHorizontalGroup(
+            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_pnlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(img_logo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(logo_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(780, 780, 780))
+        );
+        logo_pnlLayout.setVerticalGroup(
+            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_pnlLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(img_logo)
+                    .addComponent(logo_lbl))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
 
-        med_quantity_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_quantity_lbl.setText("Quantity : ");
+        jLabel6.setFont(new java.awt.Font("Segoe UI Emoji", 1, 36)); // NOI18N
+        jLabel6.setText("History");
 
-        med_camp_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_camp_lbl.setText("Company : ");
-
-        med_expire_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_expire_lbl.setText("Expire Date : ");
-
-        med_produ_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_produ_lbl.setText("Production Date:");
-
-        med_camp_input.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        med_table.setModel(new javax.swing.table.DefaultTableModel(
+        history_tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Name", "Price", "Quantity", "Production Date", "Expire Date", "Company"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        med_table.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                med_tableMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(med_table);
-
-        add_med_btn.setText("Add");
-        add_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                add_med_btnMouseClicked(evt);
-            }
-        });
-        add_med_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_med_btnActionPerformed(evt);
-            }
-        });
-
-        update_med_btn.setText("Update");
-        update_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                update_med_btnMouseClicked(evt);
-            }
-        });
-
-        delete_med_btn.setText("Delete");
-        delete_med_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                delete_med_btnMouseClicked(evt);
-            }
-        });
+        jScrollPane1.setViewportView(history_tbl);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -395,77 +357,30 @@ public class profit extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(464, 464, 464)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(med_price_lbl)
-                            .addComponent(med_name_lbl)
-                            .addComponent(med_quantity_lbl))
-                        .addGap(169, 169, 169)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(med_price_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(172, 172, 172)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(med_expire_lbl)
-                            .addComponent(med_produ_lbl)
-                            .addComponent(med_camp_lbl))
-                        .addGap(23, 23, 23)
-                        .addComponent(med_camp_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(675, 675, 675)
-                        .addComponent(add_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(184, 184, 184)
-                        .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(193, 193, 193)
-                        .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(271, 271, 271)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(logo_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(med_produ_lbl)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(med_name_lbl)
-                                    .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(40, 40, 40)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(med_price_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(med_expire_lbl)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(29, 29, 29)
-                                        .addComponent(med_price_lbl)))
-                                .addGap(10, 10, 10)
-                                .addComponent(med_quantity_lbl)
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(med_camp_input, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(med_camp_lbl)))))
-                        .addGap(191, 191, 191)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(delete_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(update_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(add_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -476,7 +391,7 @@ public class profit extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -490,8 +405,6 @@ public class profit extends javax.swing.JFrame {
 
     private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here
-        this.dispose();
-        new profit().setVisible(true);
     }//GEN-LAST:event_profit_btnMouseClicked
 
     private void home_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_home_btnMouseClicked
@@ -499,103 +412,6 @@ public class profit extends javax.swing.JFrame {
         this.dispose();
         new DashboardForm().setVisible(true);
     }//GEN-LAST:event_home_btnMouseClicked
-
-    private void med_price_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_med_price_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_med_price_inputActionPerformed
-
-    private void med_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_med_tableMouseClicked
-
-        // TODO add your handling code here:
-        DefaultTableModel tblModel = (DefaultTableModel)med_table.getModel();
-        String tblName =  tblModel.getValueAt(med_table.getSelectedRow(),0).toString();
-        String tblPrice =  tblModel.getValueAt(med_table.getSelectedRow(),1).toString();
-        String tblQuantity =  tblModel.getValueAt(med_table.getSelectedRow(),2).toString();
-        String tblacaomp =  tblModel.getValueAt(med_table.getSelectedRow(),5).toString();
-        java.util.Date date = null, date1 = null;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse((String)tblModel.getValueAt(med_table.getSelectedRow(), 3));
-            date1 = new SimpleDateFormat("yyyy-MM-dd").parse((String)tblModel.getValueAt(med_table.getSelectedRow(), 4));
-
-        } catch (ParseException ex) {
-            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        med_name_input.setText(tblName);
-        med_price_input.setText(tblPrice);
-        med_quantity_input.setText(tblQuantity);
-        med_camp_input.setSelectedItem(tblacaomp);
-    }//GEN-LAST:event_med_tableMouseClicked
-
-    private void add_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_med_btnMouseClicked
-        // TODO add your handling code here:
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        DefaultTableModel tblModel = (DefaultTableModel)med_table.getModel();
-        if(med_name_input.getText().equals("") || med_price_input.getText().equals("") || med_quantity_input.getText().equals("") || med_camp_input.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(this,"Plz, Add all data!");
-        }
-        else{
-            String data[] = { med_name_input.getText(), med_price_input.getText(),med_quantity_input.getText(), med_camp_input.getSelectedItem().toString()};
-            tblModel.addRow(data);
-            JOptionPane.showMessageDialog(this,"Data Added Successfully!");
-            med_name_input.setText("");
-            med_price_input.setText("");
-            med_quantity_input.setText("");
-            med_camp_input.setSelectedItem(0);
-        }
-    }//GEN-LAST:event_add_med_btnMouseClicked
-
-    private void add_med_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_med_btnActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_add_med_btnActionPerformed
-
-    private void update_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_med_btnMouseClicked
-        // TODO add your handling code here:
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        DefaultTableModel tblModel = (DefaultTableModel)med_table.getModel();
-        if(med_table.getSelectedRowCount() == 1){
-            // if row selected
-            String Name = med_name_input.getText();
-            String Price = med_price_input.getText();
-            String Qua = med_quantity_input.getText();
-            String Com =  med_camp_input.getSelectedItem().toString();
-            //set to uptade value in row
-            tblModel.setValueAt(Price,med_table.getSelectedRow(), 1);
-            tblModel.setValueAt(Name,med_table.getSelectedRow(), 0);
-            tblModel.setValueAt(Qua,med_table.getSelectedRow(), 2);
-            tblModel.setValueAt(Com,med_table.getSelectedRow(), 3);
-            JOptionPane.showMessageDialog(this,"Data Update Successfully!");
-        }
-        else{
-            if(med_table.getRowCount()==0){
-                JOptionPane.showMessageDialog(this,"Table is Empty");
-            }
-            else{
-                //if row nt selected || multi roe selected
-                JOptionPane.showMessageDialog(this,"Plz, Select Single Row For Update");
-            }
-        }
-    }//GEN-LAST:event_update_med_btnMouseClicked
-
-    private void delete_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_med_btnMouseClicked
-        // TODO add your handling code here:
-        DefaultTableModel tblModel = (DefaultTableModel)med_table.getModel();
-        // delet row
-        if(med_table.getSelectedRowCount() == 1){
-            //if single row selected
-            tblModel.removeRow(med_table.getSelectedRow());
-        }
-        else{
-            //if row empty
-            if(med_table.getRowCount()==0){
-                JOptionPane.showMessageDialog(this,"Table is Empty");
-            }
-            else{
-                //if row nt selected || multi roe selected
-                JOptionPane.showMessageDialog(this,"Plz, Select Single Row For Update");
-            }
-        }
-    }//GEN-LAST:event_delete_med_btnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -614,29 +430,28 @@ public class profit extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(profit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(History.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(profit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(History.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(profit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(History.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(profit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(History.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new profit().setVisible(true);
+                new History().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add_med_btn;
     private javax.swing.JPanel company_btn;
     private javax.swing.JPanel dash_pnl;
-    private javax.swing.JButton delete_med_btn;
+    private javax.swing.JTable history_tbl;
     private javax.swing.JPanel home_btn;
     private javax.swing.JLabel img_logo;
     private javax.swing.JPanel indicator1;
@@ -649,25 +464,14 @@ public class profit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logo_lbl;
     private javax.swing.JPanel logo_pnl;
-    private javax.swing.JComboBox<String> med_camp_input;
-    private javax.swing.JLabel med_camp_lbl;
-    private javax.swing.JLabel med_expire_lbl;
-    private javax.swing.JTextField med_name_input;
-    private javax.swing.JLabel med_name_lbl;
-    private javax.swing.JTextField med_price_input;
-    private javax.swing.JLabel med_price_lbl;
-    private javax.swing.JLabel med_produ_lbl;
-    private javax.swing.JTextField med_quantity_input;
-    private javax.swing.JLabel med_quantity_lbl;
-    private javax.swing.JTable med_table;
     private javax.swing.JPanel personal_btn;
     private javax.swing.JPanel profit_btn;
-    private javax.swing.JButton update_med_btn;
     // End of variables declaration//GEN-END:variables
 }

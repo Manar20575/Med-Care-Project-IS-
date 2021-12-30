@@ -10,13 +10,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class attendance extends javax.swing.JFrame {
+public class new_emp extends javax.swing.JFrame {
     /**
      * Creates new form attendance
      */
     DefaultTableModel dtm;
     Connection con;
-    public attendance() {
+    public new_emp() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -24,7 +24,7 @@ public class attendance extends javax.swing.JFrame {
         dtm.addColumn("Employee ID");
         dtm.addColumn("Employee Name");
         dtm.addColumn("Employee Number");
-        dtm.addColumn("Attendence Time");
+        dtm.addColumn("Employee Address");
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
         } catch (SQLException ex) {
@@ -56,6 +56,8 @@ public class attendance extends javax.swing.JFrame {
         back_btn = new javax.swing.JLabel();
         emp_job_lbl = new javax.swing.JLabel();
         add_emp_number = new javax.swing.JTextField();
+        emp_job_lbl1 = new javax.swing.JLabel();
+        add_emp_address = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +128,9 @@ public class attendance extends javax.swing.JFrame {
         emp_job_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         emp_job_lbl.setText("Number :");
 
+        emp_job_lbl1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        emp_job_lbl1.setText("Address :");
+
         javax.swing.GroupLayout attendance_pnlLayout = new javax.swing.GroupLayout(attendance_pnl);
         attendance_pnl.setLayout(attendance_pnlLayout);
         attendance_pnlLayout.setHorizontalGroup(
@@ -135,26 +140,29 @@ public class attendance extends javax.swing.JFrame {
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(attendance_pnlLayout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(attendance_pnlLayout.createSequentialGroup()
-                                .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(attendance_pnlLayout.createSequentialGroup()
-                                .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(emp_job_lbl)
-                                    .addComponent(emp_name_lbl))
-                                .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(attendance_pnlLayout.createSequentialGroup()
-                                        .addGap(170, 170, 170)
-                                        .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(attendance_pnlLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(add_emp_number, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(181, 181, 181)
                         .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addData, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emp_job_lbl)
+                            .addComponent(emp_name_lbl)
+                            .addComponent(emp_job_lbl1)
+                            .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(attendance_pnlLayout.createSequentialGroup()
+                                    .addGap(170, 170, 170)
+                                    .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendance_pnlLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(add_emp_number, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(add_emp_address, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendance_pnlLayout.createSequentialGroup()
+                                .addGap(170, 170, 170)
+                                .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(140, 140, 140)
+                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(updateData, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addData, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(deletData, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendance_pnlLayout.createSequentialGroup()
@@ -167,32 +175,37 @@ public class attendance extends javax.swing.JFrame {
             .addGroup(attendance_pnlLayout.createSequentialGroup()
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(attendance_pnlLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(addData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(back_btn)
+                        .addComponent(back_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(attendance_pnlLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(83, 83, 83)
+                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12)
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendance_pnlLayout.createSequentialGroup()
+                    .addGroup(attendance_pnlLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(emp_name_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(emp_job_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE))
+                        .addComponent(emp_job_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(attendance_pnlLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(updateData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
-                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(28, 28, 28)
+                        .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(add_emp_number, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deletData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(deletData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emp_job_lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_emp_address, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,18 +228,16 @@ public class attendance extends javax.swing.JFrame {
 
     private void addDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDataActionPerformed
         // TODO add your handling code here:
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");  
-        Date date = new Date();  
         if(add_emp_name.getText().equals("") || add_emp_id.getText().equals("") || add_emp_number.getText().equals("")){
             JOptionPane.showMessageDialog(this,"Please, Add all the data!");
         }
         else{
             try {
-                PreparedStatement stm = con.prepareStatement("insert into employee (employee_name,employee_id, employee_num, leave_t) values (?, ?, ?, ?)");
+                PreparedStatement stm = con.prepareStatement("insert into employee (employee_name,employee_id, employee_num, employee_address) values (?, ?, ?, ?)");
                 stm.setString(1, add_emp_name.getText());
                 stm.setInt(2, (int) Double.parseDouble(add_emp_id.getText()));
                 stm.setInt(3, (int) Double.parseDouble(add_emp_number.getText()));
-                stm.setInt(4, 0);
+                stm.setString(4, add_emp_address.getText());
                 stm.executeUpdate();
                 JOptionPane.showMessageDialog(this,"Added Successfully!");
                 fillTable();
@@ -234,14 +245,14 @@ public class attendance extends javax.swing.JFrame {
                 add_emp_name.setText("");
                 add_emp_number.setText("");
             } catch (SQLException ex) {
-                Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
             }         
     }//GEN-LAST:event_addDataActionPerformed
     private void fillTable() {
         try {
             dtm.setRowCount(0);
-            PreparedStatement stm = con.prepareStatement("select employee_id, employee_name, employee_num, attendence from employee");
+            PreparedStatement stm = con.prepareStatement("select employee_id, employee_name, employee_num, employee_address from employee");
             ResultSet rs = stm.executeQuery();
             while(rs.next())
             {
@@ -260,10 +271,10 @@ public class attendance extends javax.swing.JFrame {
             try {
                 // if row selected
                 int id = (int) tblModel.getValueAt(attend_table.getSelectedRow(),0);
-                PreparedStatement stm = con.prepareStatement("update employee set employee_name=?, employee_num=?, leave_t=?, employee_id=? where employee_id=?");
+                PreparedStatement stm = con.prepareStatement("update employee set employee_name=?, employee_num=?, employee_address=?, employee_id=? where employee_id=?");
                 stm.setString(1, add_emp_name.getText());
                 stm.setInt(2, (int) Double.parseDouble(add_emp_number.getText()));
-                stm.setInt(3, 0);
+                stm.setString(3, add_emp_address.getText());
                 stm.setInt(4, (int) Double.parseDouble(add_emp_id.getText()));
                 stm.setInt(5, id);
                 stm.executeUpdate();
@@ -306,7 +317,7 @@ public class attendance extends javax.swing.JFrame {
                 add_emp_name.setText("");
                 add_emp_number.setText("");
             } catch (SQLException ex) {
-                Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
@@ -335,6 +346,7 @@ public class attendance extends javax.swing.JFrame {
         add_emp_name.setText(tblModel.getValueAt(attend_table.getSelectedRow(),1).toString());
         add_emp_id.setText(tblModel.getValueAt(attend_table.getSelectedRow(),0).toString());
         add_emp_number.setText(tblModel.getValueAt(attend_table.getSelectedRow(),2).toString());     
+        add_emp_address.setText(tblModel.getValueAt(attend_table.getSelectedRow(),3).toString()); 
     }//GEN-LAST:event_attend_tableMouseClicked
 
     /**
@@ -367,13 +379,14 @@ public class attendance extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new attendance().setVisible(true);
+                new new_emp().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton addData;
+    private javax.swing.JTextField add_emp_address;
     private javax.swing.JTextField add_emp_id;
     private javax.swing.JTextField add_emp_name;
     private javax.swing.JTextField add_emp_number;
@@ -383,6 +396,7 @@ public class attendance extends javax.swing.JFrame {
     private javax.swing.JToggleButton deletData;
     private javax.swing.JLabel emp_id_lbl;
     private javax.swing.JLabel emp_job_lbl;
+    private javax.swing.JLabel emp_job_lbl1;
     private javax.swing.JLabel emp_name_lbl;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton updateData;

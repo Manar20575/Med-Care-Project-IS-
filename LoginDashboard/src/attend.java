@@ -1,25 +1,42 @@
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
 /**
  *
- * @author User
+ * @author Menna
  */
-public class personnel extends javax.swing.JFrame {
-
+public class attend extends javax.swing.JFrame {
+    
     /**
-     * Creates new form personnel
+     * Creates new form attend
      */
-    public personnel() {
+    DefaultTableModel dtm;
+    Connection con;
+    public attend() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        dtm = new DefaultTableModel();
+        dtm.addColumn("Employee ID");
+        dtm.addColumn("Employee Name");
+        dtm.addColumn("Days attended");
+        dtm.addColumn("Attendence Time");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/med_care", "root", "root");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -31,6 +48,11 @@ public class personnel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        logo_pnl = new javax.swing.JPanel();
+        img_logo = new javax.swing.JLabel();
+        logo_lbl = new javax.swing.JLabel();
         dash_pnl2 = new javax.swing.JPanel();
         company_btn2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -50,16 +72,47 @@ public class personnel extends javax.swing.JFrame {
         home_btn = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        leave_pnl = new javax.swing.JPanel();
-        leave_lbl = new javax.swing.JLabel();
-        attend_btn = new javax.swing.JPanel();
-        attend_lbl = new javax.swing.JLabel();
-        logo_pnl = new javax.swing.JPanel();
-        img_logo = new javax.swing.JLabel();
-        logo_lbl = new javax.swing.JLabel();
+        attend_btn = new javax.swing.JRadioButton();
+        leave_btn = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        emp_id_lbl = new javax.swing.JLabel();
+        add_emp_id = new javax.swing.JTextField();
+        emp_name_lbl = new javax.swing.JLabel();
+        add_emp_name = new javax.swing.JTextField();
+        new_emp_btn = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
+
+        img_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/capsules.png"))); // NOI18N
+
+        logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
+        logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        logo_lbl.setText("Med Care");
+
+        javax.swing.GroupLayout logo_pnlLayout = new javax.swing.GroupLayout(logo_pnl);
+        logo_pnl.setLayout(logo_pnlLayout);
+        logo_pnlLayout.setHorizontalGroup(
+            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_pnlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(img_logo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logo_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(704, 704, 704))
+        );
+        logo_pnlLayout.setVerticalGroup(
+            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_pnlLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logo_lbl)
+                    .addComponent(img_logo))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
 
         dash_pnl2.setBackground(new java.awt.Color(233, 233, 233));
 
@@ -67,13 +120,13 @@ public class personnel extends javax.swing.JFrame {
         company_btn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         company_btn2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                company_btnMouseClicked(evt);
+                company_btn2company_btnMouseClicked(evt);
             }
         });
 
         jLabel9.setBackground(new java.awt.Color(233, 233, 233));
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel9.setText("Companies");
+        jLabel9.setText("Deals");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/company.png"))); // NOI18N
 
@@ -101,7 +154,7 @@ public class personnel extends javax.swing.JFrame {
         personal_btn.setBackground(new java.awt.Color(0, 204, 183));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel5.setText("Personnel");
+        jLabel5.setText("Attendance");
 
         indicator3.setBackground(new java.awt.Color(2, 152, 137));
         indicator3.setOpaque(false);
@@ -166,7 +219,7 @@ public class personnel extends javax.swing.JFrame {
         );
         indicator5Layout.setVerticalGroup(
             indicator5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 108, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search.png"))); // NOI18N
@@ -206,7 +259,7 @@ public class personnel extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel7.setText("Profit");
+        jLabel7.setText("History");
 
         indicator4.setBackground(new java.awt.Color(2, 152, 137));
         indicator4.setOpaque(false);
@@ -219,7 +272,7 @@ public class personnel extends javax.swing.JFrame {
         );
         indicator4Layout.setVerticalGroup(
             indicator4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 106, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/hand.png"))); // NOI18N
@@ -240,7 +293,7 @@ public class personnel extends javax.swing.JFrame {
             profit_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(indicator4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profit_btnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(profit_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profit_btnLayout.createSequentialGroup()
                         .addComponent(jLabel11)
@@ -297,9 +350,8 @@ public class personnel extends javax.swing.JFrame {
         dash_pnl2Layout.setVerticalGroup(
             dash_pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dash_pnl2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(home_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(60, 60, 60)
                 .addComponent(company_btn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78)
                 .addComponent(personal_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,159 +359,169 @@ public class personnel extends javax.swing.JFrame {
                 .addComponent(profit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82)
                 .addComponent(check_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        leave_pnl.setBackground(new java.awt.Color(233, 233, 233));
-        leave_pnl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        leave_pnl.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                leave_pnlMouseClicked(evt);
-            }
-        });
-
-        leave_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        leave_lbl.setText("Leave");
-
-        javax.swing.GroupLayout leave_pnlLayout = new javax.swing.GroupLayout(leave_pnl);
-        leave_pnl.setLayout(leave_pnlLayout);
-        leave_pnlLayout.setHorizontalGroup(
-            leave_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leave_pnlLayout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
-                .addComponent(leave_lbl)
-                .addGap(84, 84, 84))
-        );
-        leave_pnlLayout.setVerticalGroup(
-            leave_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(leave_pnlLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(leave_lbl)
-                .addContainerGap(38, Short.MAX_VALUE))
-        );
-
-        attend_btn.setBackground(new java.awt.Color(233, 233, 233));
-        attend_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        attend_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                attend_btnMouseClicked(evt);
-            }
-        });
-
-        attend_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        attend_lbl.setText("Attendance");
-
-        javax.swing.GroupLayout attend_btnLayout = new javax.swing.GroupLayout(attend_btn);
-        attend_btn.setLayout(attend_btnLayout);
-        attend_btnLayout.setHorizontalGroup(
-            attend_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attend_btnLayout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
-                .addComponent(attend_lbl)
-                .addGap(78, 78, 78))
-        );
-        attend_btnLayout.setVerticalGroup(
-            attend_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(attend_btnLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(attend_lbl)
-                .addContainerGap(38, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(281, 281, 281)
-                .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(302, 302, 302)
-                .addComponent(leave_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(588, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(309, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(leave_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(455, 455, 455))
-        );
-
-        logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
-
-        img_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/capsules.png"))); // NOI18N
-
-        logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
-        logo_lbl.setText("Med Care");
-
-        javax.swing.GroupLayout logo_pnlLayout = new javax.swing.GroupLayout(logo_pnl);
-        logo_pnl.setLayout(logo_pnlLayout);
-        logo_pnlLayout.setHorizontalGroup(
-            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logo_pnlLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(img_logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logo_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(704, 704, 704))
-        );
-        logo_pnlLayout.setVerticalGroup(
-            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logo_pnlLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo_lbl)
-                    .addComponent(img_logo))
                 .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        buttonGroup1.add(attend_btn);
+        attend_btn.setText("Attend");
+        attend_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attend_btnActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(leave_btn);
+        leave_btn.setText("Leave");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        emp_id_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        emp_id_lbl.setText("Id : ");
+
+        add_emp_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_emp_idActionPerformed(evt);
+            }
+        });
+
+        emp_name_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        emp_name_lbl.setText("Name : ");
+
+        new_emp_btn.setBackground(new java.awt.Color(233, 233, 233));
+        new_emp_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        new_emp_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new_emp_btncompany_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel13.setBackground(new java.awt.Color(233, 233, 233));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setText("New Employee? Add Yourself in the data!");
+
+        javax.swing.GroupLayout new_emp_btnLayout = new javax.swing.GroupLayout(new_emp_btn);
+        new_emp_btn.setLayout(new_emp_btnLayout);
+        new_emp_btnLayout.setHorizontalGroup(
+            new_emp_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, new_emp_btnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        new_emp_btnLayout.setVerticalGroup(
+            new_emp_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, new_emp_btnLayout.createSequentialGroup()
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(dash_pnl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(new_emp_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(281, 281, 281)
+                                .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(leave_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(emp_name_lbl)
+                                .addGap(26, 26, 26)
+                                .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 33, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(logo_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(40, 40, 40)
+                                        .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(add_emp_id, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(attend_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(leave_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(emp_name_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(add_emp_name, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(new_emp_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dash_pnl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(dash_pnl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(logo_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dash_pnl2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void attend_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attend_btnMouseClicked
+    private void company_btn2company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btn2company_btnMouseClicked
         // TODO add your handling code here:
         this.dispose();
-        new new_emp().setVisible(true);
-    }//GEN-LAST:event_attend_btnMouseClicked
+        new company().setVisible(true);
+    }//GEN-LAST:event_company_btn2company_btnMouseClicked
 
-    private void leave_pnlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leave_pnlMouseClicked
+    private void check_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_btnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_leave_pnlMouseClicked
+        this.dispose();
+        new check().setVisible(true);
+    }//GEN-LAST:event_check_btnMouseClicked
 
     private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_profit_btnMouseClicked
-
-    private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        new company().setVisible(true);
-    }//GEN-LAST:event_company_btnMouseClicked
 
     private void home_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_home_btnMouseClicked
         // TODO add your handling code here:
@@ -467,11 +529,19 @@ public class personnel extends javax.swing.JFrame {
         new DashboardForm().setVisible(true);
     }//GEN-LAST:event_home_btnMouseClicked
 
-    private void check_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_btnMouseClicked
+    private void add_emp_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_emp_idActionPerformed
         // TODO add your handling code here:
-       this.dispose();
-       new check().setVisible(true);
-    }//GEN-LAST:event_check_btnMouseClicked
+    }//GEN-LAST:event_add_emp_idActionPerformed
+
+    private void new_emp_btncompany_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_emp_btncompany_btnMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new new_emp().setVisible(true);
+    }//GEN-LAST:event_new_emp_btncompany_btnMouseClicked
+
+    private void attend_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attend_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_attend_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -490,58 +560,57 @@ public class personnel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(attend.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(attend.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(attend.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(attend.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new personnel().setVisible(true);
+                new attend().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel attend_btn;
-    private javax.swing.JLabel attend_lbl;
+    private javax.swing.JTextField add_emp_id;
+    private javax.swing.JTextField add_emp_name;
+    private javax.swing.JRadioButton attend_btn;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel check_btn;
-    private javax.swing.JPanel company_btn;
-    private javax.swing.JPanel company_btn1;
     private javax.swing.JPanel company_btn2;
-    private javax.swing.JPanel dash_pnl;
-    private javax.swing.JPanel dash_pnl1;
     private javax.swing.JPanel dash_pnl2;
+    private javax.swing.JLabel emp_id_lbl;
+    private javax.swing.JLabel emp_name_lbl;
     private javax.swing.JPanel home_btn;
     private javax.swing.JLabel img_logo;
-    private javax.swing.JPanel indicator2;
     private javax.swing.JPanel indicator3;
     private javax.swing.JPanel indicator4;
     private javax.swing.JPanel indicator5;
-    private javax.swing.JPanel indicator6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel leave_lbl;
-    private javax.swing.JPanel leave_pnl;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton leave_btn;
     private javax.swing.JLabel logo_lbl;
     private javax.swing.JPanel logo_pnl;
+    private javax.swing.JPanel new_emp_btn;
     private javax.swing.JPanel personal_btn;
     private javax.swing.JPanel profit_btn;
     // End of variables declaration//GEN-END:variables

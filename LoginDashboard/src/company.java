@@ -607,7 +607,7 @@ public class company extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Added Successfully!");
                 fillTable();
             } catch (SQLException ex) {
-                Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
             companyname_input.setText("");
             companyphone_input.setText("");
@@ -653,7 +653,7 @@ public class company extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Data Deleted Successfully!");
                 fillTable();
             } catch (SQLException ex) {
-                Logger.getLogger(attendance.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
             companyname_input.setText("");
             companyphone_input.setText("");
