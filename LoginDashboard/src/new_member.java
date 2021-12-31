@@ -280,7 +280,7 @@ public class new_member extends javax.swing.JFrame {
                 add_emp_number.setText("");
                 add_emp_address.setText("");
             } catch (SQLException ex) {
-                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(new_member.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_addDataActionPerformed
@@ -340,7 +340,7 @@ public class new_member extends javax.swing.JFrame {
                 add_emp_number.setText("");
                 add_emp_address.setText("");
             } catch (SQLException ex) {
-                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(new_member.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
