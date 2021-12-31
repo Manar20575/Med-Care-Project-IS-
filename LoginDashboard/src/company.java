@@ -554,8 +554,6 @@ public class company extends javax.swing.JFrame {
 
     private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
         // TODO add your handling code here:
-        this.dispose();
-        new personnel().setVisible(true);
     }//GEN-LAST:event_personal_btnMouseClicked
 
     private void check_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_btnMouseClicked
