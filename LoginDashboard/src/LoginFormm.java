@@ -56,13 +56,13 @@ public class LoginFormm extends javax.swing.JFrame {
         username_lbl1.setForeground(new java.awt.Color(0, 204, 183));
         username_lbl1.setText("Username :");
         getContentPane().add(username_lbl1);
-        username_lbl1.setBounds(940, 420, 124, 29);
+        username_lbl1.setBounds(940, 410, 124, 29);
 
         password_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         password_lbl.setForeground(new java.awt.Color(0, 204, 183));
         password_lbl.setText("Password :");
         getContentPane().add(password_lbl);
-        password_lbl.setBounds(940, 520, 117, 29);
+        password_lbl.setBounds(940, 510, 117, 29);
         getContentPane().add(username_input);
         username_input.setBounds(1110, 410, 260, 40);
 
@@ -89,7 +89,7 @@ public class LoginFormm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(login_btn);
-        login_btn.setBounds(1110, 670, 110, 40);
+        login_btn.setBounds(1070, 610, 110, 40);
 
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/v870-tang-36.jpg"))); // NOI18N
