@@ -62,33 +62,32 @@ public class DashboardForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         bill_table = new javax.swing.JTable();
         buy_med_btn = new javax.swing.JButton();
+        search_btn = new javax.swing.JButton();
+        med_name_lbl = new javax.swing.JLabel();
+        med_name_input = new javax.swing.JTextField();
+        med_quan_lbl = new javax.swing.JLabel();
+        med_quantity_input = new javax.swing.JTextField();
         dash_pnl = new javax.swing.JPanel();
+        logo_pnl = new javax.swing.JPanel();
+        img_logo = new javax.swing.JLabel();
+        img_logo1 = new javax.swing.JLabel();
+        logo_lbl = new javax.swing.JLabel();
+        home_btn1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        indicator5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         company_btn = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         indicator2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         personal_btn = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
         indicator3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         profit_btn = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
         indicator4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        logo_pnl = new javax.swing.JPanel();
-        img_logo = new javax.swing.JLabel();
-        logo_lbl = new javax.swing.JLabel();
-        home_btn = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        indicator1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        med_name_lbl = new javax.swing.JLabel();
-        med_name_input = new javax.swing.JTextField();
-        search_btn = new javax.swing.JButton();
-        med_quan_lbl = new javax.swing.JLabel();
-        med_quantity_input = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,7 +98,7 @@ public class DashboardForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Qua", "Date"
+                "Name", "Price", "Qua", "Date"
             }
         ));
         jScrollPane1.setViewportView(bill_table);
@@ -116,31 +115,155 @@ public class DashboardForm extends javax.swing.JFrame {
             }
         });
 
+        search_btn.setText("Search");
+        search_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                search_btnMouseClicked(evt);
+            }
+        });
+        search_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_btnActionPerformed(evt);
+            }
+        });
+
+        med_name_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        med_name_lbl.setText("Name : ");
+
+        med_quan_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        med_quan_lbl.setText("Quantity :");
+
+        med_quantity_input.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                med_quantity_inputActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout main_pnlLayout = new javax.swing.GroupLayout(main_pnl);
         main_pnl.setLayout(main_pnlLayout);
         main_pnlLayout.setHorizontalGroup(
             main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_pnlLayout.createSequentialGroup()
+                .addGap(204, 204, 204)
                 .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(med_name_lbl)
+                        .addGap(0, 0, 0)
+                        .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97)
+                        .addComponent(med_quan_lbl)
+                        .addGap(64, 64, 64)
+                        .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(main_pnlLayout.createSequentialGroup()
-                        .addGap(330, 330, 330)
-                        .addComponent(buy_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(1514, Short.MAX_VALUE))
+                        .addGap(126, 126, 126)
+                        .addComponent(buy_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(240, 240, 240)
+                        .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(323, Short.MAX_VALUE))
         );
         main_pnlLayout.setVerticalGroup(
             main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_pnlLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(med_name_lbl))
+                    .addGroup(main_pnlLayout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(med_quan_lbl)
+                            .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(148, 148, 148)
+                .addGroup(main_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buy_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(118, 118, 118)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buy_med_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(508, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         dash_pnl.setBackground(new java.awt.Color(233, 233, 233));
+
+        logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
+
+        img_logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/capsules.png"))); // NOI18N
+
+        logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
+        logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        logo_lbl.setText("Med Care");
+
+        javax.swing.GroupLayout logo_pnlLayout = new javax.swing.GroupLayout(logo_pnl);
+        logo_pnl.setLayout(logo_pnlLayout);
+        logo_pnlLayout.setHorizontalGroup(
+            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_pnlLayout.createSequentialGroup()
+                .addComponent(img_logo1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(img_logo)
+                    .addGroup(logo_pnlLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(logo_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        logo_pnlLayout.setVerticalGroup(
+            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_pnlLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logo_lbl)
+                    .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(img_logo1)
+                        .addComponent(img_logo)))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
+        home_btn1.setBackground(new java.awt.Color(0, 204, 183));
+        home_btn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel7.setText("Home");
+
+        indicator5.setBackground(new java.awt.Color(2, 152, 137));
+        indicator5.setOpaque(false);
+
+        javax.swing.GroupLayout indicator5Layout = new javax.swing.GroupLayout(indicator5);
+        indicator5.setLayout(indicator5Layout);
+        indicator5Layout.setHorizontalGroup(
+            indicator5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 18, Short.MAX_VALUE)
+        );
+        indicator5Layout.setVerticalGroup(
+            indicator5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/medical-history.png"))); // NOI18N
+
+        javax.swing.GroupLayout home_btn1Layout = new javax.swing.GroupLayout(home_btn1);
+        home_btn1.setLayout(home_btn1Layout);
+        home_btn1Layout.setHorizontalGroup(
+            home_btn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, home_btn1Layout.createSequentialGroup()
+                .addComponent(indicator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        home_btn1Layout.setVerticalGroup(
+            home_btn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(indicator5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, home_btn1Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(home_btn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
+        );
 
         company_btn.setBackground(new java.awt.Color(233, 233, 233));
         company_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -149,6 +272,10 @@ public class DashboardForm extends javax.swing.JFrame {
                 company_btnMouseClicked(evt);
             }
         });
+
+        jLabel4.setBackground(new java.awt.Color(233, 233, 233));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel4.setText("Deals");
 
         indicator2.setBackground(new java.awt.Color(2, 152, 137));
         indicator2.setOpaque(false);
@@ -164,10 +291,7 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/staff.png"))); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel5.setText("Personnel");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/company.png"))); // NOI18N
 
         javax.swing.GroupLayout company_btnLayout = new javax.swing.GroupLayout(company_btn);
         company_btn.setLayout(company_btnLayout);
@@ -176,27 +300,23 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGroup(company_btnLayout.createSequentialGroup()
                 .addComponent(indicator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         company_btnLayout.setVerticalGroup(
             company_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(indicator2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(company_btnLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
-            .addGroup(company_btnLayout.createSequentialGroup()
                 .addGroup(company_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(company_btnLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(company_btnLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         personal_btn.setBackground(new java.awt.Color(233, 233, 233));
@@ -206,6 +326,9 @@ public class DashboardForm extends javax.swing.JFrame {
                 personal_btnMouseClicked(evt);
             }
         });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel5.setText("Personnel");
 
         indicator3.setBackground(new java.awt.Color(2, 152, 137));
         indicator3.setOpaque(false);
@@ -221,6 +344,8 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/staff.png"))); // NOI18N
+
         javax.swing.GroupLayout personal_btnLayout = new javax.swing.GroupLayout(personal_btn);
         personal_btn.setLayout(personal_btnLayout);
         personal_btnLayout.setHorizontalGroup(
@@ -229,6 +354,8 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addComponent(indicator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         personal_btnLayout.setVerticalGroup(
@@ -236,8 +363,10 @@ public class DashboardForm extends javax.swing.JFrame {
             .addComponent(indicator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, personal_btnLayout.createSequentialGroup()
                 .addContainerGap(31, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addGroup(personal_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
 
         profit_btn.setBackground(new java.awt.Color(233, 233, 233));
@@ -247,6 +376,9 @@ public class DashboardForm extends javax.swing.JFrame {
                 profit_btnMouseClicked(evt);
             }
         });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel12.setText("History");
 
         indicator4.setBackground(new java.awt.Color(2, 152, 137));
         indicator4.setOpaque(false);
@@ -262,6 +394,8 @@ public class DashboardForm extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search.png"))); // NOI18N
+
         javax.swing.GroupLayout profit_btnLayout = new javax.swing.GroupLayout(profit_btn);
         profit_btn.setLayout(profit_btnLayout);
         profit_btnLayout.setHorizontalGroup(
@@ -270,210 +404,70 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addComponent(indicator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         profit_btnLayout.setVerticalGroup(
             profit_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(indicator4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profit_btnLayout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(profit_btnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
-        );
-
-        logo_pnl.setBackground(new java.awt.Color(0, 204, 183));
-
-        logo_lbl.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        logo_lbl.setForeground(new java.awt.Color(255, 255, 255));
-        logo_lbl.setText("Med Care");
-
-        home_btn.setBackground(new java.awt.Color(0, 204, 183));
-        home_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel3.setText("Home");
-
-        indicator1.setBackground(new java.awt.Color(2, 152, 137));
-        indicator1.setOpaque(false);
-
-        javax.swing.GroupLayout indicator1Layout = new javax.swing.GroupLayout(indicator1);
-        indicator1.setLayout(indicator1Layout);
-        indicator1Layout.setHorizontalGroup(
-            indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 18, Short.MAX_VALUE)
-        );
-        indicator1Layout.setVerticalGroup(
-            indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/medical-history.png"))); // NOI18N
-
-        javax.swing.GroupLayout home_btnLayout = new javax.swing.GroupLayout(home_btn);
-        home_btn.setLayout(home_btnLayout);
-        home_btnLayout.setHorizontalGroup(
-            home_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, home_btnLayout.createSequentialGroup()
-                .addComponent(indicator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(profit_btnLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        home_btnLayout.setVerticalGroup(
-            home_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(indicator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, home_btnLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(home_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(home_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16))
-        );
-
-        javax.swing.GroupLayout logo_pnlLayout = new javax.swing.GroupLayout(logo_pnl);
-        logo_pnl.setLayout(logo_pnlLayout);
-        logo_pnlLayout.setHorizontalGroup(
-            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logo_pnlLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(img_logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logo_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(home_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        logo_pnlLayout.setVerticalGroup(
-            logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logo_pnlLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(logo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo_lbl)
-                    .addComponent(img_logo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(home_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jLabel4.setBackground(new java.awt.Color(233, 233, 233));
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel4.setText("   Companies");
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/company.png"))); // NOI18N
 
         javax.swing.GroupLayout dash_pnlLayout = new javax.swing.GroupLayout(dash_pnl);
         dash_pnl.setLayout(dash_pnlLayout);
         dash_pnlLayout.setHorizontalGroup(
             dash_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(personal_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(profit_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(company_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(dash_pnlLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGroup(dash_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(company_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(personal_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(profit_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7))
+            .addComponent(home_btn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(logo_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         dash_pnlLayout.setVerticalGroup(
             dash_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dash_pnlLayout.createSequentialGroup()
                 .addComponent(logo_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(dash_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dash_pnlLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(dash_pnlLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(138, 138, 138)
+                .addGap(80, 80, 80)
+                .addComponent(home_btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
                 .addComponent(company_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(80, 80, 80)
                 .addComponent(personal_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(80, 80, 80)
                 .addComponent(profit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 200, Short.MAX_VALUE))
+                .addGap(0, 237, Short.MAX_VALUE))
         );
-
-        med_name_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_name_lbl.setText("Name : ");
-
-        search_btn.setText("Search");
-        search_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                search_btnMouseClicked(evt);
-            }
-        });
-        search_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search_btnActionPerformed(evt);
-            }
-        });
-
-        med_quan_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        med_quan_lbl.setText("Quantity :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(med_name_lbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(med_quan_lbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(med_name_lbl)
-                    .addComponent(med_name_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(med_quan_lbl)
-                    .addComponent(med_quantity_input, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addComponent(main_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(dash_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(main_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        new company().setVisible(true);
-    }//GEN-LAST:event_company_btnMouseClicked
-
-    private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_personal_btnMouseClicked
-
-    private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-        new History().setVisible(true);
-    }//GEN-LAST:event_profit_btnMouseClicked
 
     private void buy_med_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buy_med_btnMouseClicked
         // TODO add your handling code here:
@@ -540,6 +534,28 @@ public class DashboardForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buy_med_btnActionPerformed
 
+    private void company_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_company_btnMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new company().setVisible(true);
+    }//GEN-LAST:event_company_btnMouseClicked
+
+    private void personal_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personal_btnMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new attend().setVisible(true);
+    }//GEN-LAST:event_personal_btnMouseClicked
+
+    private void profit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profit_btnMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new History().setVisible(true);
+    }//GEN-LAST:event_profit_btnMouseClicked
+
+    private void med_quantity_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_med_quantity_inputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_med_quantity_inputActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -580,22 +596,21 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JButton buy_med_btn;
     private javax.swing.JPanel company_btn;
     private javax.swing.JPanel dash_pnl;
-    private javax.swing.JPanel home_btn;
+    private javax.swing.JPanel home_btn1;
     private javax.swing.JLabel img_logo;
-    private javax.swing.JPanel indicator1;
+    private javax.swing.JLabel img_logo1;
     private javax.swing.JPanel indicator2;
     private javax.swing.JPanel indicator3;
     private javax.swing.JPanel indicator4;
+    private javax.swing.JPanel indicator5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logo_lbl;
     private javax.swing.JPanel logo_pnl;
