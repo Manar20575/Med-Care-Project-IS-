@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -6,15 +10,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
- * @author User
+ * @author Menna
  */
-public class new_emp extends javax.swing.JFrame {
-    /**
-     * Creates new form attendance
-     */
+public class new_member extends javax.swing.JFrame {
     DefaultTableModel dtm;
     Connection con;
-    public new_emp() {
+    /**
+     * Creates new form new_member
+     */
+    public new_member() {
         initComponents();
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -31,7 +35,20 @@ public class new_emp extends javax.swing.JFrame {
         }
         fillTable();
     }
-
+    private void fillTable() {
+        try {
+            dtm.setRowCount(0);
+            PreparedStatement stm = con.prepareStatement("select employee_id, employee_name, employee_num, employee_address from employee");
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                dtm.addRow(new Object[]{rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4)});  
+            }
+            attend_table.setModel(dtm);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +58,7 @@ public class new_emp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         attendance_pnl = new javax.swing.JPanel();
         emp_id_lbl = new javax.swing.JLabel();
         add_emp_id = new javax.swing.JTextField();
@@ -84,9 +102,6 @@ public class new_emp extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(attend_table);
-        if (attend_table.getColumnModel().getColumnCount() > 0) {
-            attend_table.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         emp_name_lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         emp_name_lbl.setText("Name : ");
@@ -133,7 +148,7 @@ public class new_emp extends javax.swing.JFrame {
         attendance_pnl.setLayout(attendance_pnlLayout);
         attendance_pnlLayout.setHorizontalGroup(
             attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1573, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
             .addGroup(attendance_pnlLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +175,7 @@ public class new_emp extends javax.swing.JFrame {
                     .addComponent(addData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(updateData, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                     .addComponent(deletData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(662, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attendance_pnlLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(back_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,7 +186,7 @@ public class new_emp extends javax.swing.JFrame {
             .addGroup(attendance_pnlLayout.createSequentialGroup()
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(attendance_pnlLayout.createSequentialGroup()
-                        .addContainerGap(75, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(emp_id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(attendance_pnlLayout.createSequentialGroup()
                         .addContainerGap()
@@ -202,20 +217,31 @@ public class new_emp extends javax.swing.JFrame {
                 .addGroup(attendance_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emp_job_lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_emp_address, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(attendance_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(attendance_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(attendance_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(attendance_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -224,6 +250,15 @@ public class new_emp extends javax.swing.JFrame {
     private void add_emp_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_emp_idActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_add_emp_idActionPerformed
+
+    private void attend_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attend_tableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel)attend_table.getModel();
+        add_emp_name.setText(tblModel.getValueAt(attend_table.getSelectedRow(),1).toString());
+        add_emp_id.setText(tblModel.getValueAt(attend_table.getSelectedRow(),0).toString());
+        add_emp_number.setText(tblModel.getValueAt(attend_table.getSelectedRow(),2).toString());
+        add_emp_address.setText(tblModel.getValueAt(attend_table.getSelectedRow(),3).toString());
+    }//GEN-LAST:event_attend_tableMouseClicked
 
     private void addDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDataActionPerformed
         // TODO add your handling code here:
@@ -243,31 +278,18 @@ public class new_emp extends javax.swing.JFrame {
                 add_emp_id.setText("");
                 add_emp_name.setText("");
                 add_emp_number.setText("");
-                add_emp_address.setText(""); 
+                add_emp_address.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            }         
-    }//GEN-LAST:event_addDataActionPerformed
-    private void fillTable() {
-        try {
-            dtm.setRowCount(0);
-            PreparedStatement stm = con.prepareStatement("select employee_id, employee_name, employee_num, employee_address from employee");
-            ResultSet rs = stm.executeQuery();
-            while(rs.next())
-            {
-                dtm.addRow(new Object[]{rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4)});  
-            }
-            attend_table.setModel(dtm);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
         }
-    }
+    }//GEN-LAST:event_addDataActionPerformed
+
     private void updateDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateDataActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tblModel = (DefaultTableModel)attend_table.getModel();
         if(attend_table.getSelectedRowCount() == 1){
-            //set to uptade value in row 
+            //set to uptade value in row
             try {
                 // if row selected
                 int id = (int) tblModel.getValueAt(attend_table.getSelectedRow(),0);
@@ -297,7 +319,6 @@ public class new_emp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Please, Select Single Row For Update");
             }
         }
-
     }//GEN-LAST:event_updateDataActionPerformed
 
     private void deletDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletDataActionPerformed
@@ -321,7 +342,7 @@ public class new_emp extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
         else{
             //if row empty
@@ -333,7 +354,6 @@ public class new_emp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Please, Select Single Row For Update");
             }
         }
-
     }//GEN-LAST:event_deletDataActionPerformed
 
     private void back_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_btnMouseClicked
@@ -341,15 +361,6 @@ public class new_emp extends javax.swing.JFrame {
         this.dispose();
         new attend().setVisible(true);
     }//GEN-LAST:event_back_btnMouseClicked
-
-    private void attend_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attend_tableMouseClicked
-        // TODO add your handling code here:
-        DefaultTableModel tblModel = (DefaultTableModel)attend_table.getModel();
-        add_emp_name.setText(tblModel.getValueAt(attend_table.getSelectedRow(),1).toString());
-        add_emp_id.setText(tblModel.getValueAt(attend_table.getSelectedRow(),0).toString());
-        add_emp_number.setText(tblModel.getValueAt(attend_table.getSelectedRow(),2).toString());     
-        add_emp_address.setText(tblModel.getValueAt(attend_table.getSelectedRow(),3).toString()); 
-    }//GEN-LAST:event_attend_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -368,20 +379,20 @@ public class new_emp extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(attendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(new_member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(attendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(new_member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(attendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(new_member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(attendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(new_member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new new_emp().setVisible(true);
+                new new_member().setVisible(true);
             }
         });
     }
@@ -400,6 +411,7 @@ public class new_emp extends javax.swing.JFrame {
     private javax.swing.JLabel emp_job_lbl;
     private javax.swing.JLabel emp_job_lbl1;
     private javax.swing.JLabel emp_name_lbl;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton updateData;
     // End of variables declaration//GEN-END:variables

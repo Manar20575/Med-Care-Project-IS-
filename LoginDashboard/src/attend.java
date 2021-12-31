@@ -501,7 +501,7 @@ public class attend extends javax.swing.JFrame {
     private void new_emp_btncompany_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_emp_btncompany_btnMouseClicked
         // TODO add your handling code here:
         this.dispose();
-        new new_emp().setVisible(true);
+        new new_member().setVisible(true);
     }//GEN-LAST:event_new_emp_btncompany_btnMouseClicked
 
     private void attend_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attend_btnActionPerformed

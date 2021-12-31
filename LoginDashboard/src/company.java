@@ -570,7 +570,7 @@ public class company extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Added Successfully!");
                 fillTable();
             } catch (SQLException ex) {
-                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex);
             }
             companyname_input.setText("");
             companyphone_input.setText("");
@@ -616,7 +616,7 @@ public class company extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Data Deleted Successfully!");
                 fillTable();
             } catch (SQLException ex) {
-                Logger.getLogger(new_emp.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex);
             }
             companyname_input.setText("");
             companyphone_input.setText("");
@@ -664,7 +664,7 @@ public class company extends javax.swing.JFrame {
                 med_price_input.setText(""); 
                 JOptionPane.showMessageDialog(this,"Data Updated Successfully!");
             } catch (SQLException ex) {
-                Logger.getLogger(company.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex);
             }
         }
         else{

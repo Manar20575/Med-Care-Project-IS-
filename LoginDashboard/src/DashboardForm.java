@@ -101,6 +101,11 @@ public class DashboardForm extends javax.swing.JFrame {
                 "Name", "Price", "Qua", "Date"
             }
         ));
+        bill_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bill_tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(bill_table);
 
         buy_med_btn.setText("Buy");
@@ -554,6 +559,12 @@ public class DashboardForm extends javax.swing.JFrame {
     private void med_quantity_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_med_quantity_inputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_med_quantity_inputActionPerformed
+
+    private void bill_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bill_tableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel)bill_table.getModel();
+        med_name_input.setText(tblModel.getValueAt(bill_table.getSelectedRow(),0).toString());
+    }//GEN-LAST:event_bill_tableMouseClicked
 
     /**
      * @param args the command line arguments
